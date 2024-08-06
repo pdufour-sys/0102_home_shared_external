@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aretha-1 Adverse Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 80%;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            z-index: 1000;
+        }
+        .header h1 {
+            display: inline;
+        }
+        .header label {
+            margin-right: 10px;
+        }
+        .table-container {
+            overflow-y: auto;
+            height: 80vh;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .no-rows {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const saeOnlyCheckbox = document.getElementById('saeOnly');
+            const gradeCheckboxes = [
+                document.getElementById('grade1'),
+                document.getElementById('grade2'),
+                document.getElementById('grade3'),
+                document.getElementById('grade4')
+            ];
+            const noRowsMessage = document.getElementById('no-rows');
+            const table = document.getElementById('aeTable');
+            const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
+
+            function filterRows() {
+                let visibleRows = 0;
+                rows.forEach(row => {
+                    const sae = row.getAttribute('data-sae');
+                    const grade = row.getAttribute('data-grade');
+
+                    const showSAE = !saeOnlyCheckbox.checked || sae === 'Yes';
+                    const showGrade = gradeCheckboxes.some(checkbox => checkbox.checked && checkbox.value == grade);
+
+                    if (showSAE && showGrade) {
+                        row.style.display = '';
+                        visibleRows++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                noRowsMessage.style.display = visibleRows === 0 ? 'block' : 'none';
+            }
+
+            saeOnlyCheckbox.addEventListener('change', filterRows);
+            gradeCheckboxes.forEach(checkbox => checkbox.addEventListener('change', filterRows));
+
+            filterRows();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Amelia-1 AEs</h1>
+            <label><input type="checkbox" id="saeOnly"> SAE Only</label>
+            <label><input type="checkbox" id="grade1" value="1" checked> Show Grade 1</label>
+            <label><input type="checkbox" id="grade2" value="2" checked> Show Grade 2</label>
+            <label><input type="checkbox" id="grade3" value="3" checked> Show Grade 3</label>
+            <label><input type="checkbox" id="grade4" value="4" checked> Show Grade 4</label>
+        </div>
+        <div class="table-container">
+            <table id="aeTable">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>AE</th>
+                        <th>Grade</th>
+                        <th>SAE</th>
+                        <th>Eribulin Related</th>
+                        <th>SDX-7320 Related</th>
+                        <th>Start Date</th>
+                        <th>Star Date Since C1D1</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated here -->
+                </tbody>
+            </table>
+            <div id="no-rows" class="no-rows">No rows match</div>
+        </div>
+    </div>
+    <script>
+        const data = [
+	{ "Subject": "CTMS-1", "AE": "Injection site reaction", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": "12/21/2022" },
+	    { "Subject": "CTMS-1", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": "12/21/2022" },
+	    { "Subject": "CTMS-1", "AE": "Peripheral motor neuropathy", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "01/08/2023", "DaysSinceC1D1Start": 18, "dAEEndDate": "01/08/2023" },
+	    { "Subject": "CTMS-1", "AE": "Aspartate aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "01/11/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "01/11/2023" },
+	    { "Subject": "CTMS-1", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "01/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": "01/18/2023" },
+	    { "Subject": "CTMS-1", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "01/19/2023", "DaysSinceC1D1Start": 29, "dAEEndDate": "01/19/2023" },
+	    { "Subject": "CTMS-1", "AE": "Hot flashes", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "02/02/2023", "DaysSinceC1D1Start": 43, "dAEEndDate": "02/02/2023" },
+	    { "Subject": "CTMS-1", "AE": "Rhinorrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "03/19/2023", "DaysSinceC1D1Start": 88, "dAEEndDate": "03/19/2023" },
+	    { "Subject": "CTMS-1", "AE": "Nausea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "03/25/2023", "DaysSinceC1D1Start": 94, "dAEEndDate": "03/25/2023" },
+	    { "Subject": "CTMS-1", "AE": "Muscle weakness lower limb", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "04/30/2023", "DaysSinceC1D1Start": 130, "dAEEndDate": "04/30/2023" },
+	    { "Subject": "CTMS-1", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "05/31/2023", "DaysSinceC1D1Start": 161, "dAEEndDate": "05/31/2023" },
+	    { "Subject": "CTMS-1", "AE": "Fall", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unrelated", "dAEStartDate": "06/09/2023", "DaysSinceC1D1Start": 170, "dAEEndDate": "06/09/2023" },
+	    { "Subject": "CTMS-2", "AE": "Diarrhea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "11/05/2022", "DaysSinceC1D1Start": 5, "dAEEndDate": "11/05/2022" },
+	    { "Subject": "CTMS-2", "AE": "Anorexia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "11/07/2022", "DaysSinceC1D1Start": 7, "dAEEndDate": "11/07/2022" },
+	    { "Subject": "CTMS-2", "AE": "Diarrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "11/21/2022", "DaysSinceC1D1Start": 21, "dAEEndDate": "11/21/2022" },
+	    { "Subject": "CTMS-2", "AE": "Fatigue", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "11/26/2022", "DaysSinceC1D1Start": 26, "dAEEndDate": "11/26/2022" },
+	    { "Subject": "CTMS-2", "AE": "Dry mouth", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "12/01/2022", "DaysSinceC1D1Start": 31, "dAEEndDate": "12/01/2022" },
+	    { "Subject": "CTMS-2", "AE": "Nasal congestion", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/07/2022", "DaysSinceC1D1Start": 37, "dAEEndDate": "12/07/2022" },
+	    { "Subject": "CTMS-2", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "12/19/2022", "DaysSinceC1D1Start": 49, "dAEEndDate": "12/19/2022" },
+	    { "Subject": "CTMS-2", "AE": "COVID", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/28/2022", "DaysSinceC1D1Start": 58, "dAEEndDate": "12/28/2022" },
+	    { "Subject": "CTMS-2", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "01/14/2023", "DaysSinceC1D1Start": 75, "dAEEndDate": "01/14/2023" },
+	    { "Subject": "CTMS-2", "AE": "Weight loss", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "01/18/2023", "DaysSinceC1D1Start": 79, "dAEEndDate": "01/18/2023" },
+	    { "Subject": "CTMS-3", "AE": "Skin infection", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "03/01/2023", "DaysSinceC1D1Start": 27, "dAEEndDate": "03/01/2023" },
+	    { "Subject": "CTMS-3", "AE": "Constipation", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/05/2023", "DaysSinceC1D1Start": 31, "dAEEndDate": "03/05/2023" },
+	    { "Subject": "CTMS-3", "AE": "Nausea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "03/05/2023", "DaysSinceC1D1Start": 31, "dAEEndDate": "03/05/2023" },
+	    { "Subject": "CTMS-3", "AE": "Neutrophil count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/13/2023", "DaysSinceC1D1Start": 70, "dAEEndDate": "04/13/2023" },
+	    { "Subject": "CTMS-3", "AE": "White blood cell decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/13/2023", "DaysSinceC1D1Start": 70, "dAEEndDate": "04/13/2023" },
+	    { "Subject": "CTMS-3", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/13/2023", "DaysSinceC1D1Start": 70, "dAEEndDate": "04/13/2023" },
+	    { "Subject": "CTMS-3", "AE": "Productive cough", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/23/2023", "DaysSinceC1D1Start": 80, "dAEEndDate": "04/23/2023" },
+	    { "Subject": "CTMS-3", "AE": "Rhinorrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/23/2023", "DaysSinceC1D1Start": 80, "dAEEndDate": "04/23/2023" },
+	    { "Subject": "CTMS-3", "AE": "Watering eyes", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/23/2023", "DaysSinceC1D1Start": 80, "dAEEndDate": "04/23/2023" },
+	    { "Subject": "CTMS-4", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "03/04/2023", "DaysSinceC1D1Start": 2, "dAEEndDate": "03/04/2023" },
+	    { "Subject": "CTMS-4", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "03/04/2023", "DaysSinceC1D1Start": 2, "dAEEndDate": "03/04/2023" },
+	    { "Subject": "CTMS-4", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/09/2023", "DaysSinceC1D1Start": 7, "dAEEndDate": "03/09/2023" },
+	    { "Subject": "CTMS-4", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/09/2023", "DaysSinceC1D1Start": 7, "dAEEndDate": "03/09/2023" },
+	    { "Subject": "CTMS-4", "AE": "White blood cell decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/09/2023", "DaysSinceC1D1Start": 7, "dAEEndDate": "03/09/2023" },
+	    { "Subject": "CTMS-4", "AE": "Platelet count decreased", "CTCAE.Grade": 4, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "03/15/2023", "DaysSinceC1D1Start": 13, "dAEEndDate": "03/15/2023" },
+	    { "Subject": "CTMS-4", "AE": "Abdominal Pain", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "03/28/2023", "DaysSinceC1D1Start": 26, "dAEEndDate": "03/28/2023" },
+	    { "Subject": "CTMS-4", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/28/2023", "DaysSinceC1D1Start": 26, "dAEEndDate": "03/28/2023" },
+	    { "Subject": "CTMS-4", "AE": "Abdominal Pain", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/01/2023", "DaysSinceC1D1Start": 30, "dAEEndDate": "04/01/2023" },
+	    { "Subject": "CTMS-5", "AE": "Neutrophil count decreased", "CTCAE.Grade": 4, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Febrile neutropenia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Sinus tachycardia", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Urinary frequency", "CTCAE.Grade": 1, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Dyspnea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Alopecia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Definite", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Mucositis oral", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Diarrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/12/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/12/2023" },
+	    { "Subject": "CTMS-5", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/19/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "04/19/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Probable", "dAEStartDate": "04/19/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "04/19/2023" },
+	    { "Subject": "CTMS-5", "AE": "Nausea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/19/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "04/19/2023" },
+	    { "Subject": "CTMS-5", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/27/2023", "DaysSinceC1D1Start": 29, "dAEEndDate": "04/27/2023" },
+	    { "Subject": "CTMS-5", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/27/2023", "DaysSinceC1D1Start": 29, "dAEEndDate": "04/27/2023" },
+	    { "Subject": "CTMS-5", "AE": "Rash maculo-papular", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "05/01/2023", "DaysSinceC1D1Start": 33, "dAEEndDate": "05/01/2023" },
+	    { "Subject": "CTMS-5", "AE": "Chest wall pain", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "05/04/2023", "DaysSinceC1D1Start": 36, "dAEEndDate": "05/04/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Probable", "dAEStartDate": "05/25/2023", "DaysSinceC1D1Start": 57, "dAEEndDate": "05/25/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "06/01/2023", "DaysSinceC1D1Start": 64, "dAEEndDate": "06/01/2023" },
+	    { "Subject": "CTMS-5", "AE": "Dry skin", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "06/01/2023", "DaysSinceC1D1Start": 64, "dAEEndDate": "06/01/2023" },
+	    { "Subject": "CTMS-5", "AE": "Nail changes", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "06/01/2023", "DaysSinceC1D1Start": 64, "dAEEndDate": "06/01/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "06/15/2023", "DaysSinceC1D1Start": 78, "dAEEndDate": "06/15/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/06/2023", "DaysSinceC1D1Start": 99, "dAEEndDate": "07/06/2023" },
+	    { "Subject": "CTMS-5", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/13/2023", "DaysSinceC1D1Start": 106, "dAEEndDate": "07/13/2023" },
+	    { "Subject": "CTMS-5", "AE": "Lung infection", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "07/21/2023", "DaysSinceC1D1Start": 114, "dAEEndDate": "07/21/2023" },
+	    { "Subject": "CTMS-5", "AE": "Edema limbs", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "07/21/2023", "DaysSinceC1D1Start": 114, "dAEEndDate": "07/21/2023" },
+	    { "Subject": "CTMS-5", "AE": "Lung infection", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "07/23/2023", "DaysSinceC1D1Start": 116, "dAEEndDate": "07/23/2023" },
+	    { "Subject": "CTMS-6", "AE": "Skin infection", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "07/13/2023", "DaysSinceC1D1Start": 7, "dAEEndDate": "07/13/2023" },
+	    { "Subject": "CTMS-6", "AE": "Thromboembolic event", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/13/2023", "DaysSinceC1D1Start": 7, "dAEEndDate": "07/13/2023" },
+	    { "Subject": "CTMS-6", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/24/2023", "DaysSinceC1D1Start": 18, "dAEEndDate": "07/24/2023" },
+	    { "Subject": "CTMS-6", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "08/01/2023", "DaysSinceC1D1Start": 26, "dAEEndDate": "08/01/2023" },
+	    { "Subject": "CTMS-6", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "08/10/2023", "DaysSinceC1D1Start": 35, "dAEEndDate": "08/10/2023" },
+	    { "Subject": "CTMS-6", "AE": "Hypokalemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "08/10/2023", "DaysSinceC1D1Start": 35, "dAEEndDate": "08/10/2023" },
+	    { "Subject": "CTMS-6", "AE": "Lung infection", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "08/23/2023", "DaysSinceC1D1Start": 48, "dAEEndDate": "08/23/2023" },
+	    { "Subject": "CTMS-6", "AE": "Lung infection", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "09/06/2023", "DaysSinceC1D1Start": 62, "dAEEndDate": "09/06/2023" },
+	    { "Subject": "CTMS-6", "AE": "Dyspnea", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "09/06/2023", "DaysSinceC1D1Start": 62, "dAEEndDate": "09/06/2023" },
+	    { "Subject": "CTMS-6", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "09/06/2023", "DaysSinceC1D1Start": 62, "dAEEndDate": "09/06/2023" },
+	    { "Subject": "CTMS-6", "AE": "Lung infection", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "09/11/2023", "DaysSinceC1D1Start": 67, "dAEEndDate": "09/11/2023" },
+	    { "Subject": "CTMS-6", "AE": "Hypokalemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "09/22/2023", "DaysSinceC1D1Start": 78, "dAEEndDate": "09/22/2023" },
+	    { "Subject": "CTMS-6", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Probable", "dAEStartDate": "09/22/2023", "DaysSinceC1D1Start": 78, "dAEEndDate": "09/22/2023" },
+	    { "Subject": "CTMS-6", "AE": "Dyspnea", "CTCAE.Grade": 4, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "10/02/2023", "DaysSinceC1D1Start": 88, "dAEEndDate": "10/02/2023" },
+	    { "Subject": "CTMS-7", "AE": "Febrile neutropenia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Definite", "SDX7320": "Unlikely", "dAEStartDate": "07/11/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/11/2023" },
+	    { "Subject": "CTMS-7", "AE": "Hypokalemia", "CTCAE.Grade": 1, "SAE": "Yes", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "07/11/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/11/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 4, "SAE": "Yes", "Eribulin": "Definite", "SDX7320": "Unlikely", "dAEStartDate": "07/11/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/11/2023" },
+	    { "Subject": "CTMS-7", "AE": "Alanine aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/11/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/11/2023" },
+	    { "Subject": "CTMS-7", "AE": "Fever", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Possible", "dAEStartDate": "07/12/2023", "DaysSinceC1D1Start": 9, "dAEEndDate": "07/12/2023" },
+	    { "Subject": "CTMS-7", "AE": "Hypotension", "CTCAE.Grade": 1, "SAE": "Yes", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "07/12/2023", "DaysSinceC1D1Start": 9, "dAEEndDate": "07/12/2023" },
+	    { "Subject": "CTMS-7", "AE": "Allergic reaction", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "07/13/2023", "DaysSinceC1D1Start": 10, "dAEEndDate": "07/13/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anorexia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/17/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "07/17/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Definite", "SDX7320": "Unlikely", "dAEStartDate": "07/19/2023", "DaysSinceC1D1Start": 16, "dAEEndDate": "07/19/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "07/19/2023", "DaysSinceC1D1Start": 16, "dAEEndDate": "07/19/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Probable", "dAEStartDate": "07/24/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "07/24/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 4, "SAE": "Yes", "Eribulin": "Definite", "SDX7320": "Unlikely", "dAEStartDate": "08/09/2023", "DaysSinceC1D1Start": 37, "dAEEndDate": "08/09/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "08/21/2023", "DaysSinceC1D1Start": 49, "dAEEndDate": "08/21/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Unrelated", "dAEStartDate": "08/21/2023", "DaysSinceC1D1Start": 49, "dAEEndDate": "08/21/2023" },
+	    { "Subject": "CTMS-7", "AE": "Dyspepsia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Probable", "dAEStartDate": "09/01/2023", "DaysSinceC1D1Start": 60, "dAEEndDate": "09/01/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "09/06/2023", "DaysSinceC1D1Start": 65, "dAEEndDate": "09/06/2023" },
+	    { "Subject": "CTMS-7", "AE": "Peripheral motor neuropathy", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "09/06/2023", "DaysSinceC1D1Start": 65, "dAEEndDate": "09/06/2023" },
+	    { "Subject": "CTMS-7", "AE": "Purpura", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "09/26/2023", "DaysSinceC1D1Start": 85, "dAEEndDate": "09/26/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "09/27/2023", "DaysSinceC1D1Start": 86, "dAEEndDate": "09/27/2023" },
+	    { "Subject": "CTMS-7", "AE": "Hypotension", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "10/02/2023", "DaysSinceC1D1Start": 91, "dAEEndDate": "10/02/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Possible", "dAEStartDate": "10/02/2023", "DaysSinceC1D1Start": 91, "dAEEndDate": "10/02/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Possible", "dAEStartDate": "10/02/2023", "DaysSinceC1D1Start": 91, "dAEEndDate": "10/02/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "10/09/2023", "DaysSinceC1D1Start": 98, "dAEEndDate": "10/09/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "10/09/2023", "DaysSinceC1D1Start": 98, "dAEEndDate": "10/09/2023" },
+	    { "Subject": "CTMS-7", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "10/09/2023", "DaysSinceC1D1Start": 98, "dAEEndDate": "10/09/2023" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "10/16/2023", "DaysSinceC1D1Start": 105, "dAEEndDate": "10/16/2023" },
+	    { "Subject": "CTMS-7", "AE": "Dysgeusia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unrelated", "dAEStartDate": "12/04/2023", "DaysSinceC1D1Start": 154, "dAEEndDate": "12/04/2023" },
+	    { "Subject": "CTMS-7", "AE": "Pain", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/31/2023", "DaysSinceC1D1Start": 181, "dAEEndDate": "12/31/2023" },
+	    { "Subject": "CTMS-7", "AE": "Alanine aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/04/2024", "DaysSinceC1D1Start": 185, "dAEEndDate": "01/04/2024" },
+	    { "Subject": "CTMS-7", "AE": "Aspartate aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/04/2024", "DaysSinceC1D1Start": 185, "dAEEndDate": "01/04/2024" },
+	    { "Subject": "CTMS-7", "AE": "Alkaline Phosphate Increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/04/2024", "DaysSinceC1D1Start": 185, "dAEEndDate": "01/04/2024" },
+	    { "Subject": "CTMS-7", "AE": "Keratitis", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "02/07/2024", "DaysSinceC1D1Start": 219, "dAEEndDate": "02/07/2024" },
+	    { "Subject": "CTMS-7", "AE": "Alanine aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "03/04/2024", "DaysSinceC1D1Start": 245, "dAEEndDate": "03/04/2024" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "06/24/2024", "DaysSinceC1D1Start": 357, "dAEEndDate": "06/24/2024" },
+	    { "Subject": "CTMS-7", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "07/01/2024", "DaysSinceC1D1Start": 364, "dAEEndDate": "07/01/2024" },
+	    { "Subject": "CTMS-8", "AE": "Weight loss", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "07/07/2023", "DaysSinceC1D1Start": 1, "dAEEndDate": "07/07/2023" },
+	    { "Subject": "CTMS-8", "AE": "Platelet count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "07/20/2023", "DaysSinceC1D1Start": 14, "dAEEndDate": "07/20/2023" },
+	    { "Subject": "CTMS-8", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/28/2023", "DaysSinceC1D1Start": 22, "dAEEndDate": "07/28/2023" },
+	    { "Subject": "CTMS-8", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "08/04/2023", "DaysSinceC1D1Start": 29, "dAEEndDate": "08/04/2023" },
+	    { "Subject": "CTMS-8", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "08/25/2023", "DaysSinceC1D1Start": 50, "dAEEndDate": "08/25/2023" },
+	    { "Subject": "CTMS-8", "AE": "Fever", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "08/31/2023", "DaysSinceC1D1Start": 56, "dAEEndDate": "08/31/2023" },
+	    { "Subject": "CTMS-8", "AE": "Cough", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "09/01/2023", "DaysSinceC1D1Start": 57, "dAEEndDate": "09/01/2023" },
+	    { "Subject": "CTMS-8", "AE": "Dysgeusia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "09/08/2023", "DaysSinceC1D1Start": 64, "dAEEndDate": "09/08/2023" },
+	    { "Subject": "CTMS-8", "AE": "Platelet count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "09/14/2023", "DaysSinceC1D1Start": 70, "dAEEndDate": "09/14/2023" },
+	    { "Subject": "CTMS-8", "AE": "Flank pain", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "09/19/2023", "DaysSinceC1D1Start": 75, "dAEEndDate": "09/19/2023" },
+	    { "Subject": "CTMS-8", "AE": "Thromboembolic event", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "09/22/2023", "DaysSinceC1D1Start": 78, "dAEEndDate": "09/22/2023" },
+	    { "Subject": "CTMS-9", "AE": "Pruritus", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/10/2023", "DaysSinceC1D1Start": 0, "dAEEndDate": "07/10/2023" },
+	    { "Subject": "CTMS-9", "AE": "Vertigo", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "07/10/2023", "DaysSinceC1D1Start": 0, "dAEEndDate": "07/10/2023" },
+	    { "Subject": "CTMS-9", "AE": "Vomiting", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "07/12/2023", "DaysSinceC1D1Start": 2, "dAEEndDate": "07/12/2023" },
+	    { "Subject": "CTMS-9", "AE": "Diarrhea", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "07/18/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/18/2023" },
+	    { "Subject": "CTMS-9", "AE": "Vomiting", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Possible", "dAEStartDate": "07/18/2023", "DaysSinceC1D1Start": 8, "dAEEndDate": "07/18/2023" },
+	    { "Subject": "CTMS-9", "AE": "Fever", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "07/20/2023", "DaysSinceC1D1Start": 10, "dAEEndDate": "07/20/2023" },
+	    { "Subject": "CTMS-9", "AE": "Febrile neutropenia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "07/20/2023", "DaysSinceC1D1Start": 10, "dAEEndDate": "07/20/2023" },
+	    { "Subject": "CTMS-10", "AE": "Vomiting", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "11/15/2023", "DaysSinceC1D1Start": 0, "dAEEndDate": "11/15/2023" },
+	    { "Subject": "CTMS-10", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "12/04/2023", "DaysSinceC1D1Start": 19, "dAEEndDate": "12/04/2023" },
+	    { "Subject": "CTMS-11", "AE": "Hyperglycemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "01/17/2024", "DaysSinceC1D1Start": 0, "dAEEndDate": "01/17/2024" },
+	    { "Subject": "CTMS-11", "AE": "Bloating", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/25/2024", "DaysSinceC1D1Start": 8, "dAEEndDate": "01/25/2024" },
+	    { "Subject": "CTMS-11", "AE": "Gastrointestinal pain", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/25/2024", "DaysSinceC1D1Start": 8, "dAEEndDate": "01/25/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/31/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "01/31/2024" },
+	    { "Subject": "CTMS-11", "AE": "Alkaline Phosphate Increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "01/31/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "01/31/2024" },
+	    { "Subject": "CTMS-11", "AE": "Hyperglycemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "01/31/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "01/31/2024" },
+	    { "Subject": "CTMS-11", "AE": "Diarrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "01/31/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "01/31/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "02/13/2024", "DaysSinceC1D1Start": 27, "dAEEndDate": "02/13/2024" },
+	    { "Subject": "CTMS-11", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "02/13/2024", "DaysSinceC1D1Start": 27, "dAEEndDate": "02/13/2024" },
+	    { "Subject": "CTMS-11", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "02/13/2024", "DaysSinceC1D1Start": 27, "dAEEndDate": "02/13/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "02/27/2024", "DaysSinceC1D1Start": 41, "dAEEndDate": "02/27/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "03/12/2024", "DaysSinceC1D1Start": 55, "dAEEndDate": "03/12/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unrelated", "dAEStartDate": "03/28/2024", "DaysSinceC1D1Start": 71, "dAEEndDate": "03/28/2024" },
+	    { "Subject": "CTMS-11", "AE": "Pain in extremity", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/02/2024", "DaysSinceC1D1Start": 76, "dAEEndDate": "04/02/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "06/04/2024", "DaysSinceC1D1Start": 139, "dAEEndDate": "06/04/2024" },
+	    { "Subject": "CTMS-11", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "06/11/2024", "DaysSinceC1D1Start": 146, "dAEEndDate": "06/11/2024" },
+	    { "Subject": "CTMS-11", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "06/18/2024", "DaysSinceC1D1Start": 153, "dAEEndDate": "06/18/2024" },
+	    { "Subject": "CTMS-11", "AE": "Pain in extremity", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "06/25/2024", "DaysSinceC1D1Start": 160, "dAEEndDate": "06/25/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Unrelated", "dAEStartDate": "01/24/2024", "DaysSinceC1D1Start": 7, "dAEEndDate": "01/24/2024" },
+	    { "Subject": "CTMS-12", "AE": "White blood cell decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Unrelated", "dAEStartDate": "01/24/2024", "DaysSinceC1D1Start": 7, "dAEEndDate": "01/24/2024" },
+	    { "Subject": "CTMS-12", "AE": "Mucositis oral", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "01/24/2024", "DaysSinceC1D1Start": 7, "dAEEndDate": "01/24/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 4, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "01/26/2024", "DaysSinceC1D1Start": 9, "dAEEndDate": "01/26/2024" },
+	    { "Subject": "CTMS-12", "AE": "White blood cell decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "01/26/2024", "DaysSinceC1D1Start": 9, "dAEEndDate": "01/26/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Definite", "SDX7320": "Unlikely", "dAEStartDate": "02/05/2024", "DaysSinceC1D1Start": 19, "dAEEndDate": "02/05/2024" },
+	    { "Subject": "CTMS-12", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "02/05/2024", "DaysSinceC1D1Start": 19, "dAEEndDate": "02/05/2024" },
+	    { "Subject": "CTMS-12", "AE": "Injection site reaction", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Probable", "dAEStartDate": "02/21/2024", "DaysSinceC1D1Start": 35, "dAEEndDate": "02/21/2024" },
+	    { "Subject": "CTMS-12", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/05/2024", "DaysSinceC1D1Start": 48, "dAEEndDate": "03/05/2024" },
+	    { "Subject": "CTMS-12", "AE": "Anorexia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "03/05/2024", "DaysSinceC1D1Start": 48, "dAEEndDate": "03/05/2024" },
+	    { "Subject": "CTMS-12", "AE": "Peripheral motor neuropathy", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "03/05/2024", "DaysSinceC1D1Start": 48, "dAEEndDate": "03/05/2024" },
+	    { "Subject": "CTMS-12", "AE": "Injection site reaction", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Probable", "dAEStartDate": "03/07/2024", "DaysSinceC1D1Start": 50, "dAEEndDate": "03/07/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "03/14/2024", "DaysSinceC1D1Start": 57, "dAEEndDate": "03/14/2024" },
+	    { "Subject": "CTMS-12", "AE": "Diarrhea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "03/23/2024", "DaysSinceC1D1Start": 66, "dAEEndDate": "03/23/2024" },
+	    { "Subject": "CTMS-12", "AE": "Thrush", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/09/2024", "DaysSinceC1D1Start": 83, "dAEEndDate": "04/09/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/15/2024", "DaysSinceC1D1Start": 89, "dAEEndDate": "04/15/2024" },
+	    { "Subject": "CTMS-12", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/16/2024", "DaysSinceC1D1Start": 90, "dAEEndDate": "04/16/2024" },
+	    { "Subject": "CTMS-12", "AE": "Neutrophil count decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "04/23/2024", "DaysSinceC1D1Start": 97, "dAEEndDate": "04/23/2024" },
+	    { "Subject": "CTMS-12", "AE": "White blood cell decreased", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unrelated", "dAEStartDate": "04/23/2024", "DaysSinceC1D1Start": 97, "dAEEndDate": "04/23/2024" },
+	    { "Subject": "CTMS-15", "AE": "Alkaline Phosphate Increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/03/2024", "DaysSinceC1D1Start": 0, "dAEEndDate": "04/03/2024" },
+	    { "Subject": "CTMS-15", "AE": "Fatigue", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "04/05/2024", "DaysSinceC1D1Start": 2, "dAEEndDate": "04/05/2024" },
+	    { "Subject": "CTMS-15", "AE": "Nausea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "04/09/2024", "DaysSinceC1D1Start": 6, "dAEEndDate": "04/09/2024" },
+	    { "Subject": "CTMS-15", "AE": "Hypoxia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/15/2024", "DaysSinceC1D1Start": 12, "dAEEndDate": "04/15/2024" },
+	    { "Subject": "CTMS-15", "AE": "Dyspnea", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/15/2024", "DaysSinceC1D1Start": 12, "dAEEndDate": "04/15/2024" },
+	    { "Subject": "CTMS-15", "AE": "Fatigue", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/15/2024", "DaysSinceC1D1Start": 12, "dAEEndDate": "04/15/2024" },
+	    { "Subject": "CTMS-15", "AE": "Anorexia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/15/2024", "DaysSinceC1D1Start": 12, "dAEEndDate": "04/15/2024" },
+	    { "Subject": "CTMS-15", "AE": "Pneumonia", "CTCAE.Grade": 3, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/16/2024", "DaysSinceC1D1Start": 13, "dAEEndDate": "04/16/2024" },
+	    { "Subject": "CTMS-15", "AE": "Hypoalbuminemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/16/2024", "DaysSinceC1D1Start": 13, "dAEEndDate": "04/16/2024" },
+	    { "Subject": "CTMS-15", "AE": "Platelet count decreased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "04/17/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/17/2024" },
+	    { "Subject": "CTMS-15", "AE": "Dyspnea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/19/2024", "DaysSinceC1D1Start": 16, "dAEEndDate": "04/19/2024" },
+	    { "Subject": "CTMS-15", "AE": "Generalized muscle weakness", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "04/20/2024", "DaysSinceC1D1Start": 17, "dAEEndDate": "04/20/2024" },
+	    { "Subject": "CTMS-15", "AE": "Vomiting", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/24/2024", "DaysSinceC1D1Start": 21, "dAEEndDate": "04/24/2024" },
+	    { "Subject": "CTMS-16", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "04/11/2024", "DaysSinceC1D1Start": 0, "dAEEndDate": "04/11/2024" },
+	    { "Subject": "CTMS-16", "AE": "Anorexia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unlikely", "dAEStartDate": "04/19/2024", "DaysSinceC1D1Start": 8, "dAEEndDate": "04/19/2024" },
+	    { "Subject": "CTMS-16", "AE": "Constipation", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unlikely", "SDX7320": "Unlikely", "dAEStartDate": "04/25/2024", "DaysSinceC1D1Start": 14, "dAEEndDate": "04/25/2024" },
+	    { "Subject": "CTMS-16", "AE": "Anemia", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Possible", "dAEStartDate": "05/09/2024", "DaysSinceC1D1Start": 28, "dAEEndDate": "05/09/2024" },
+	    { "Subject": "CTMS-16", "AE": "Rash maculo-papular", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Possible", "dAEStartDate": "05/09/2024", "DaysSinceC1D1Start": 28, "dAEEndDate": "05/09/2024" },
+	    { "Subject": "CTMS-16", "AE": "Seizure", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "05/19/2024", "DaysSinceC1D1Start": 38, "dAEEndDate": "05/19/2024" },
+	    { "Subject": "CTMS-16", "AE": "Anorexia", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "05/19/2024", "DaysSinceC1D1Start": 38, "dAEEndDate": "05/19/2024" },
+	    { "Subject": "CTMS-16", "AE": "Dizziness", "CTCAE.Grade": 2, "SAE": "Yes", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "05/19/2024", "DaysSinceC1D1Start": 38, "dAEEndDate": "05/19/2024" },
+	    { "Subject": "CTMS-16", "AE": "Anemia", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Possible", "SDX7320": "Unrelated", "dAEStartDate": "05/23/2024", "DaysSinceC1D1Start": 42, "dAEEndDate": "05/23/2024" },
+	    { "Subject": "CTMS-16", "AE": "Blurred Vision", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "05/25/2024", "DaysSinceC1D1Start": 44, "dAEEndDate": "05/25/2024" },
+	    { "Subject": "CTMS-16", "AE": "Dizziness", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "05/25/2024", "DaysSinceC1D1Start": 44, "dAEEndDate": "05/25/2024" },
+        ];
+      
+      const tbody = document.querySelector('#aeTable tbody');
+      
+      data.forEach(item => {
+          const row = document.createElement('tr');
+            row.setAttribute('data-sae', item.SAE);
+            row.setAttribute('data-grade', item['CTCAE.Grade']);
+            row.innerHTML = `
+                <td>${item.Subject}</td>
+                <td>${item.AE}</td>
+                <td>${item['CTCAE.Grade']}</td>
+                <td>${item.SAE}</td>
+                <td>${item.Eribulin}</td>
+                <td>${item.SDX7320}</td>
+                <td>${item.dAEStartDate}</td>
+                <td>${item.DaysSinceC1D1Start}</td>
+                <td>${item.dAEEndDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amelia-1 AEs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 80%;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            z-index: 1000;
+        }
+        .header h1 {
+            display: inline;
+        }
+        .header label {
+            margin-right: 10px;
+        }
+        .table-container {
+            overflow-y: auto;
+            height: 80vh;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        .no-rows {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const saeOnlyCheckbox = document.getElementById('saeOnly');
+            const gradeCheckboxes = [
+                document.getElementById('grade1'),
+                document.getElementById('grade2'),
+                document.getElementById('grade3'),
+                document.getElementById('grade4')
+            ];
+            const noRowsMessage = document.getElementById('no-rows');
+            const table = document.getElementById('aeTable');
+            const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
+
+            function filterRows() {
+                let visibleRows = 0;
+                rows.forEach(row => {
+                    const sae = row.getAttribute('data-sae');
+                    const grade = row.getAttribute('data-grade');
+
+                    const showSAE = !saeOnlyCheckbox.checked || sae === 'Yes';
+                    const showGrade = gradeCheckboxes.some(checkbox => checkbox.checked && checkbox.value == grade);
+
+                    if (showSAE && showGrade) {
+                        row.style.display = '';
+                        visibleRows++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                noRowsMessage.style.display = visibleRows === 0 ? 'block' : 'none';
+            }
+
+            saeOnlyCheckbox.addEventListener('change', filterRows);
+            gradeCheckboxes.forEach(checkbox => checkbox.addEventListener('change', filterRows));
+
+            filterRows();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Amelia-1 AEs</h1>
+            <label><input type="checkbox" id="saeOnly"> SAE Only</label>
+            <label><input type="checkbox" id="grade1" value="1" checked> Show Grade 1</label>
+            <label><input type="checkbox" id="grade2" value="2" checked> Show Grade 2</label>
+            <label><input type="checkbox" id="grade3" value="3" checked> Show Grade 3</label>
+            <label><input type="checkbox" id="grade4" value="4" checked> Show Grade 4</label>
+        </div>
+        <div class="table-container">
+            <table id="aeTable">
+                <thead>
+                    <tr>
+                        <th>SubjectSortable</th>
+                        <th>AE</th>
+                        <th>CTCAE Grade</th>
+                        <th>SAE</th>
+                        <th>Eribulin</th>
+                        <th>SDX7320</th>
+                        <th>Start Date</th>
+                        <th>Days Since C1D1 Start</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated here -->
+                </tbody>
+            </table>
+            <div id="no-rows" class="no-rows">No rows match</div>
+        </div>
+    </div>
+    <script>
+        const data = [
+            { "SubjectSortable": "CTMS-01", "AE": "Injection site reaction", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": "2/23/2023" },
+
+            { "SubjectSortable": "CTMS-01", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "More Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Even More Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "So much Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Still not done with Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Are you seriously still having Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
+
+
+            { "SubjectSortable": "CTMS-01", "AE": "Peripheral motor neuropathy", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "1/8/2023", "DaysSinceC1D1Start": 18, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Aspartate aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/11/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "2/1/2023" },
+            { "SubjectSortable": "CTMS-01", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+
+            { "SubjectSortable": "CTMS-01", "AE": "More Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Even More Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "So much Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Still not done with Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-01", "AE": "Are you seriously still Fatigued", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+	    
+
+            { "SubjectSortable": "CTMS-02", "AE": "Nausea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/21/2023", "DaysSinceC1D1Start": 60, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "More Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "Even More Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "So much Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "Still not done Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "Are you seriously still Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-02", "AE": "Headache", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "2/23/2023", "DaysSinceC1D1Start": 62, "dAEEndDate": null },
+            { "SubjectSortable": "CTMS-03", "AE": "Dizziness", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "3/1/2023", "DaysSinceC1D1Start": 69, "dAEEndDate": null }
+        ];
+
+        const tbody = document.querySelector('#aeTable tbody');
+
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-sae', item.SAE);
+            row.setAttribute('data-grade', item['CTCAE.Grade']);
+            row.innerHTML = `
+                <td>${item.SubjectSortable}</td>
+                <td>${item.AE}</td>
+                <td>${item['CTCAE.Grade']}</td>
+                <td>${item.SAE}</td>
+                <td>${item.Eribulin}</td>
+                <td>${item.SDX7320}</td>
+                <td>${item.dAEStartDate}</td>
+                <td>${item.DaysSinceC1D1Start}</td>
+                <td>${item.dAEEndDate}</td>
+            `;
+            tbody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

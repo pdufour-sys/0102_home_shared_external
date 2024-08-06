@@ -13,7 +13,7 @@
             background-color: #8ac300;
             display: flex;
             flex-direction: column;
-            height: 160px; /* Adjust the height as needed */
+            height: 200px; /* Adjust the height as needed */
         }
         .top-area .upper {
             display: flex;
@@ -104,7 +104,7 @@
         <div class="middle"></div>
         <div class="lower">
             <div id="tab-lab-values" class="active">Lab Values</div>
-            <div id="tab-aes">Adverse Events</div>
+            <div id="tab-aes">AEs</div>
             <div id="tab-tba-pct">FU Tumor Burden Assessment (Percent Change)</div>
             <div id="tab-tba-abs">FU Tumor Burden Assessment (Absolute Values)</div>
         </div>
