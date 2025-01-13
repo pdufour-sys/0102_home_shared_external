@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aretha-1 EDC data</title>
+    <link rel="shortcut icon" href="SynDevRxFavicon.png" type="image/x-icon" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .top-area {
+            background-color: #ddffff; /* used anywhere? */
+            display: flex;
+            flex-direction: column;
+            height: 160px; /* Adjust the height as needed */
+        }
+        .top-area .upper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            height: 50%;
+            background-color: #88dddd; /* color of the top area that contains Aretha-1 etc... */
+        }
+        .top-area .upper img {
+            max-height: 100%;
+        }
+        .top-area .upper h1 {
+            margin: 0;
+            color: black;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .top-area .lower {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ff00ff; /* color of unselected tabs */
+            /*  height: 25%; */
+            align-items: center; /* Ensure vertical centering of elements */
+            position: relative; /* So we can place select absolutely if needed */
+        }
+	.top-area .lower .select-list-style {
+            background-color: #88dddd; /* this is the background color of the <select> list */
+	}
+        .top-area .lower div {
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            color: black;
+        }
+        .top-area .lower div:hover {
+            background-color: #ee88ee; /* color of tab during hoverover */
+        }
+        .top-area .lower .active {
+            background-color: #aaaaaa; /* color of selected tab after hoverover */
+        }
+
+        /* Style the select if desired */
+        #labValuesSelect {
+            display: none; /* Hidden by default */
+            margin-left: 10px; /* Some spacing if needed */
+            font-size: 16px;
+        }
+
+        .content {
+            padding: 20px;
+            overflow-y: auto;
+            height: calc(100vh - 200px); /* Adjust to match the height of the top area */
+        }
+        .content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* Add meta tags for cache control */
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+    </style>
+    <script>
+        function showContent(file, tabId) {
+            document.getElementById('content-frame').src = file;
+            // Remove active class from all tabs
+            document.querySelectorAll('.top-area .lower div').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Add active class to the selected tab
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        /* begin block 4 */ 
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default content (which tab is selected when we first load the page
+            showContent('LabValues.html', 'tab-lab-values-all');
+            console.log('LOC 01')
+
+            const labValuesTab = document.getElementById('tab-lab-values-single');
+            const labValuesSelect = document.getElementById('labValuesSelect');
+
+            console.log('LOC 02')
+            // Replace the direct showContent() call with toggle of select
+            labValuesTab.addEventListener('click', function() {
+                // Toggle the display of the select
+                console.log('LOC 03.1');
+                console.log('LOC 03.1' + labValuesSelect.style.display);
+                if (labValuesSelect.style.display === 'none' || labValuesSelect.style.display === '') {
+                    console.log('LOC 04.1.1')
+                    labValuesSelect.style.display = 'inline-block';
+                    console.log('LOC 04.1.2')
+                } else {
+                    console.log('LOC 04.2.1')
+                    labValuesSelect.style.display = 'none';
+                    showContent('EmptyBody.html', 'tab-lab-values-single');
+                    console.log('LOC 04.2.1')
+                }
+            });
+
+            document.getElementById('tab-lab-values-all').addEventListener('click', function() {
+                showContent('LabValues.html', 'tab-lab-values-all');
+                labValuesSelect.style.display = 'none'; // Hide the select if visible
+                console.log('LOC 11');
+            });
+            document.getElementById('tab-lab-values-single').addEventListener('click', function() {
+                showContent('PleaseSelectPatient.html', 'tab-lab-values-single');
+                // labValuesSelect.style.display = 'none'; // Hide the select if visible
+		
+                console.log('LOC 12');
+            });
+
+            // When user chooses a patient in the select
+            labValuesSelect.addEventListener('change', function() {
+                const selectedValue = labValuesSelect.value;
+                if (selectedValue) {
+                    showContent(selectedValue, 'tab-lab-values-single');
+                }
+                console.log('LOC 13');
+            });
+
+            document.getElementById('tab-aes').addEventListener('click', function() {
+                showContent('AEs.html', 'tab-aes');
+                labValuesSelect.style.display = 'none'; // Hide the select if visible
+                console.log('LOC 14');
+            });
+            document.getElementById('tab-exposure').addEventListener('click', function() {
+                showContent('Exposure_toplevel.html', 'tab-exposure');
+                labValuesSelect.style.display = 'none';
+                console.log('LOC 15');
+            });
+            document.getElementById('tab-tba-pct').addEventListener('click', function() {
+                showContent('102_tba_pct.html', 'tab-tba-pct');
+                labValuesSelect.style.display = 'none';
+                console.log('LOC 16');
+            });
+            document.getElementById('tab-tba-abs').addEventListener('click', function() {
+                showContent('102_tba_abs.html', 'tab-tba-abs');
+                labValuesSelect.style.display = 'none';
+                console.log('LOC 17');
+            });
+        });
+        /* end block 4 */ 
+    </script>
+</head>
+<body>
+    <div class="top-area">
+        <div class="upper">
+            <h1>Aretha-1 EDC Overview</h1>
+            <h2>MSK Data of 12/06/24&nbsp;</h2>
+            <img src="SynDevRxLogo.jpg" alt="SynDevRx Logo">
+        </div>
+        <div class="lower">
+	    <!-- -the next 2 div used to be marked class='active' . Did that accomplish anything? -->
+            <div id="tab-lab-values-all">Lab Values</div>
+            <div id="tab-lab-values-single">Lab Values (Select Patient)</div>
+
+            <select class="select-list-style" id="labValuesSelect">
+                <option value="">Select Patient</option>
+                <option value="pp/102_pp_CTMS-01.html">CTMS-1</option>
+                <option value="pp/102_pp_CTMS-02.html">CTMS-2</options>
+                <option value="pp/102_pp_CTMS-03.html">CTMS-3</options>
+                <option value="pp/102_pp_CTMS-04.html">CTMS-4</options>
+                <option value="pp/102_pp_CTMS-05.html">CTMS-5</options>
+                <option value="pp/102_pp_CTMS-06.html">CTMS-6</options>
+                <option value="pp/102_pp_CTMS-07.html">CTMS-7</options>
+                <option value="pp/102_pp_CTMS-08.html">CTMS-8</options>
+                <option value="pp/102_pp_CTMS-09.html">CTMS-9</options>
+                <option value="pp/102_pp_CTMS-10.html">CTMS-10</options>
+                <option value="pp/102_pp_CTMS-11.html">CTMS-11</options>
+                <option value="pp/102_pp_CTMS-12.html">CTMS-12</options>
+                <option value="pp/102_pp_CTMS-13.html">CTMS-13</options>
+                <option value="pp/102_pp_CTMS-14.html">CTMS-14</options>
+                <option value="pp/102_pp_CTMS-15.html">CTMS-15</options>
+                <option value="pp/102_pp_CTMS-16.html">CTMS-16</options>
+                <option value="pp/102_pp_CTMS-17.html">CTMS-17</options>
+                <option value="pp/102_pp_CTMS-18.html">CTMS-18</options>
+                <option value="pp/102_pp_CTMS-19.html">CTMS-19</options>
+            </select>
+
+
+
+            <div id="tab-aes">Adverse Events</div>
+            <div id="tab-exposure">Exposure</div>
+        </div>
+    </div>
+    <div class="content">
+        <iframe id="content-frame" src=""></iframe>
+    </div>
+</body>
+</html>

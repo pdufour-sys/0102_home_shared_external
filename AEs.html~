@@ -3,179 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amelia-1 AEs</title>
+    <title>Aretha-1 Adverse Events</title>
+    <link rel="shortcut icon" href="SynDevRxFavicon.png" type="image/x-icon" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 80%;
-        }
-        .header {
-            position: sticky;
-            top: 0;
-            background-color: white;
-            padding: 10px 0;
-            border-bottom: 1px solid #ccc;
-            z-index: 1000;
-        }
-        .header h1 {
-            display: inline;
-        }
-        .header label {
-            margin-right: 10px;
-        }
-        .table-container {
-            overflow-y: auto;
-            height: 80vh;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-        }
-        th {
-            background-color: #f4f4f4;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-        .no-rows {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
+        /* Existing CSS here */
+	/* Style the header row for better visual appeal */
+      #eventsTable th {
+	  background-color: #4CAF50; /* A pleasant green background color */
+	  color: white; /* White text color for contrast */
+	  padding: 12px; /* More padding for a larger header */
+	  text-align: center;
+	  font-weight: bold;
+	  border: 1px solid #ddd;
+	  white-space: normal; /* Allow text wrapping */
+      }
+      
+      /* Style table rows */
+      #eventsTable td {
+	  padding: 10px;
+	  border: 1px solid #ddd;
+	  text-align: center;
+	  white-space: normal; /* Allow text wrapping */
+	  word-wrap: break-word;
+      }
+
+      /* Add a hover effect for table rows */
+      #eventsTable tr:hover {
+	  background-color: #f1f1f1; /* Light gray background on hover */
+      }
+      
+      /* Optional: Set table layout to fixed for consistent column widths */
+      #eventsTable {
+	  table-layout: auto;
+	  width: 100%;
+      }
+      
+      /* Style the container for the table for better spacing and aesthetics */
+      .table-container {
+	  overflow-y: auto;
+	  height: 80vh;
+	  border: 1px solid #ddd;
+	  border-radius: 5px;
+	  margin-top: 20px;
+      }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const saeOnlyCheckbox = document.getElementById('saeOnly');
-            const gradeCheckboxes = [
-                document.getElementById('grade1'),
-                document.getElementById('grade2'),
-                document.getElementById('grade3'),
-                document.getElementById('grade4')
-            ];
-            const noRowsMessage = document.getElementById('no-rows');
-            const table = document.getElementById('aeTable');
-            const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
-
-            function filterRows() {
-                let visibleRows = 0;
-                rows.forEach(row => {
-                    const sae = row.getAttribute('data-sae');
-                    const grade = row.getAttribute('data-grade');
-
-                    const showSAE = !saeOnlyCheckbox.checked || sae === 'Yes';
-                    const showGrade = gradeCheckboxes.some(checkbox => checkbox.checked && checkbox.value == grade);
-
-                    if (showSAE && showGrade) {
-                        row.style.display = '';
-                        visibleRows++;
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-
-                noRowsMessage.style.display = visibleRows === 0 ? 'block' : 'none';
-            }
-
-            saeOnlyCheckbox.addEventListener('change', filterRows);
-            gradeCheckboxes.forEach(checkbox => checkbox.addEventListener('change', filterRows));
-
-            filterRows();
-        });
-    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Amelia-1 AEs</h1>
-            <label><input type="checkbox" id="saeOnly"> SAE Only</label>
-            <label><input type="checkbox" id="grade1" value="1" checked> Show Grade 1</label>
-            <label><input type="checkbox" id="grade2" value="2" checked> Show Grade 2</label>
-            <label><input type="checkbox" id="grade3" value="3" checked> Show Grade 3</label>
-            <label><input type="checkbox" id="grade4" value="4" checked> Show Grade 4</label>
-        </div>
-        <div class="table-container">
-            <table id="aeTable">
+    <div class="header">
+        <h1>Amelia-1 Adverse Events</h1>
+        <label><input type="checkbox" id="saeOnly" onclick="filterData()"> SAE Only</label>
+        <label><input type="checkbox" id="grade1" onclick="filterData()"> Grade 1</label>
+        <label><input type="checkbox" id="grade2" onclick="filterData()"> Grade 2</label>
+        <label><input type="checkbox" id="grade3" onclick="filterData()"> Grade 3</label>
+        <label><input type="checkbox" id="grade4" onclick="filterData()"> Grade 4</label>
+        <label><input type="checkbox" id="selectPatient" onclick="toggleDropdown(); filterData()"> Select Patient</label>
+        <select id="patientDropdown" style="display: none;" onchange="filterData()">
+	  <option value="">-- Select Patient --</option>
+	  <option value="CTMS-1">CTMS-1</option> 
+	  <option value="CTMS-2">CTMS-2</option> 
+	  <option value="CTMS-3">CTMS-3</option> 
+	  <option value="CTMS-4">CTMS-4</option> 
+	  <option value="CTMS-5">CTMS-5</option> 
+	  <option value="CTMS-6">CTMS-6</option> 
+	  <option value="CTMS-7">CTMS-7</option> 
+	  <option value="CTMS-8">CTMS-8</option> 
+	  <option value="CTMS-9">CTMS-9</option> 
+	  <option value="CTMS-10">CTMS-10</option> 
+	  <option value="CTMS-11">CTMS-11</option> 
+	  <option value="CTMS-12">CTMS-12</option> 
+	  <option value="CTMS-13">CTMS-13</option> 
+	  <option value="CTMS-14">CTMS-14</option> 
+	  <option value="CTMS-15">CTMS-15</option> 
+	  <option value="CTMS-16">CTMS-16</option> 
+	  <option value="CTMS-17">CTMS-17</option> 
+	  <option value="CTMS-18">CTMS-18</option> 
+	  <option value="CTMS-19">CTMS-19</option>
+        </select>
+    </div>
+    <div class="table-container">
+        <table id="eventsTable">
+            <!-- Table headers and body populated here based on your data format -->
                 <thead>
                     <tr>
-                        <th>SubjectSortable</th>
+                        <th>Subject</th>
                         <th>AE</th>
-                        <th>CTCAE Grade</th>
+                        <th>Grade</th>
                         <th>SAE</th>
-                        <th>Eribulin</th>
-                        <th>SDX7320</th>
+                        <th>Eribulin Related</th>
+                        <th>SDX-7320/Evexomostat Related</th>
                         <th>Start Date</th>
-                        <th>Days Since C1D1 Start</th>
+                        <th>Start Date Since C1D1</th>
                         <th>End Date</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Rows will be populated here -->
-                </tbody>
-            </table>
-            <div id="no-rows" class="no-rows">No rows match</div>
-        </div>
+
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Injection site reaction</td><td>1</td><td>No</td><td>Unrelated</td><td>Definite</td><td>12/21/2022</td><td>0</td><td>02/23/2023</td><td>Tenderness with or without associated symptoms (e.g., warmth, erythema, itching)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Dyspnea</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>12/21/2022</td><td>0</td><td>NA</td><td>Mild symptoms; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Peripheral motor neuropathy</td><td>1</td><td>No</td><td>Probable</td><td>Unlikely</td><td>01/08/2023</td><td>18</td><td>NA</td><td>Asymptomatic</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Aspartate aminotransferase increased</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>01/11/2023</td><td>21</td><td>02/01/2023</td><td>>ULN - 3.0 x ULN if baseline was normal; 1.5 - 3.0 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>01/18/2023</td><td>28</td><td>NA</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Anemia</td><td>1</td><td>No</td><td>Probable</td><td>Unlikely</td><td>01/19/2023</td><td>29</td><td>05/30/2023</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Hot flashes</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>02/02/2023</td><td>43</td><td>NA</td><td>Mild symptoms; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Rhinorrhea</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>03/19/2023</td><td>88</td><td>07/06/2023</td><td>Present</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Nausea</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>03/25/2023</td><td>94</td><td>03/26/2023</td><td>Oral intake decreased without significant weight loss, dehydration or malnutrition</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Muscle weakness lower limb</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>04/30/2023</td><td>130</td><td>NA</td><td>Symptomatic; perceived by patient but not evident on physical exam</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Anemia</td><td>2</td><td>No</td><td>Probable</td><td>Unlikely</td><td>05/31/2023</td><td>161</td><td>06/21/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-1"><td style="white-space: nowrap;">CTMS-1</td><td>Fall</td><td>1</td><td>No</td><td>Unlikely</td><td>Unrelated</td><td>06/09/2023</td><td>170</td><td>06/09/2023</td><td>Minor with no resultant injuries; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Diarrhea</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>11/05/2022</td><td>5</td><td>11/14/2022</td><td>Increase of 4 - 6 stools per day over baseline; moderate increase in ostomy output compared to baseline; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Anorexia</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>11/07/2022</td><td>7</td><td>01/23/2023</td><td>Associated with significant weight loss or malnutrition (e.g., inadequate oral caloric and/or fluid intake); tube feeding or TPN indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Diarrhea</td><td>1</td><td>No</td><td>Probable</td><td>Probable</td><td>11/21/2022</td><td>21</td><td>01/23/2023</td><td>Increase of <4 stools per day over baseline; mild increase in ostomy output compared to baseline</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Fatigue</td><td>3</td><td>No</td><td>Probable</td><td>Possible</td><td>11/26/2022</td><td>26</td><td>01/13/2023</td><td>Fatigue not relieved by rest, limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Dry mouth</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>12/01/2022</td><td>31</td><td>NA</td><td>Symptomatic (e.g., dry or thick saliva) without significant dietary alteration; unstimulated saliva flow >0.2 ml/min</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Nasal congestion</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>12/07/2022</td><td>37</td><td>12/11/2022</td><td>Moderate symptoms; medical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>12/19/2022</td><td>49</td><td>12/21/2022</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Possible</td><td>12/19/2022</td><td>49</td><td>01/18/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>COVID</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>12/28/2022</td><td>58</td><td>12/31/2022</td><td>Moderate; minimal, local or noninvasive intervention indicated; limiting age-appropriate instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>01/14/2023</td><td>75</td><td>NA</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-2"><td style="white-space: nowrap;">CTMS-2</td><td>Weight loss</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>01/18/2023</td><td>79</td><td>NA</td><td>10 - <20% from baseline; nutritional support indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Skin infection</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/01/2023</td><td>27</td><td>NA</td><td>Oral intervention indicated (e.g., antibiotic, antifungal, or antiviral)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Constipation</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>03/05/2023</td><td>31</td><td>NA</td><td>Occasional or intermittent symptoms; occasional use of stool softeners, laxatives, dietary modification, or enema</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Nausea</td><td>1</td><td>No</td><td>Probable</td><td>Possible</td><td>03/05/2023</td><td>31</td><td>NA</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Neutrophil count decreased</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>04/13/2023</td><td>70</td><td>04/27/2023</td><td><1500 - 1000/mm3; <1.5 - 1.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>White blood cell decreased</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>04/13/2023</td><td>70</td><td>04/27/2023</td><td><3000 - 2000/mm3; <3.0 - 2.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Anemia</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>04/13/2023</td><td>70</td><td>NA</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Productive cough</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/23/2023</td><td>80</td><td>NA</td><td>Occasional/minimal production of sputum with cough</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Rhinorrhea</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/23/2023</td><td>80</td><td>NA</td><td>Present</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-3"><td style="white-space: nowrap;">CTMS-3</td><td>Watering eyes</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/23/2023</td><td>80</td><td>NA</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Dyspnea</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>03/04/2023</td><td>2</td><td>05/04/2023</td><td>Shortness of breath with moderate exertion</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>03/04/2023</td><td>2</td><td>05/04/2023</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>03/09/2023</td><td>7</td><td>03/14/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>03/09/2023</td><td>7</td><td>03/28/2023</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>White blood cell decreased</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>03/09/2023</td><td>7</td><td>03/28/2023</td><td><3000 - 2000/mm3; <3.0 - 2.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="4" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Platelet count decreased</td><td>4</td><td>Yes</td><td>Probable</td><td>Possible</td><td>03/15/2023</td><td>13</td><td>03/28/2023</td><td><25,000/mm3; <25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Abdominal Pain</td><td>3</td><td>Yes</td><td>Unlikely</td><td>Unlikely</td><td>03/28/2023</td><td>26</td><td>04/01/2023</td><td>Severe pain; limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>03/28/2023</td><td>26</td><td>05/04/2023</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-4"><td style="white-space: nowrap;">CTMS-4</td><td>Abdominal Pain</td><td>2</td><td>Yes</td><td>Unlikely</td><td>Unlikely</td><td>04/01/2023</td><td>30</td><td>05/04/2023</td><td>Moderate pain; limiting instrumental ADL</td></tr> 
+<tr data-aeser="Yes" data-grade="4" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Neutrophil count decreased</td><td>4</td><td>Yes</td><td>Probable</td><td>Probable</td><td>04/12/2023</td><td>14</td><td>04/18/2023</td><td><500/mm3; <0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Probable</td><td>04/12/2023</td><td>14</td><td>04/18/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Febrile neutropenia</td><td>3</td><td>Yes</td><td>Probable</td><td>Probable</td><td>04/12/2023</td><td>14</td><td>04/18/2023</td><td>ANC <1000/mm3 with a single temperature of >38.3 degrees C (101 degrees F) or a sustained temperature of >=38 degrees C (100.4 degrees F) for more than one hour</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Sinus tachycardia</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>04/12/2023</td><td>14</td><td>04/18/2023</td><td>Symptomatic; non-urgent medical intervention indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Urinary frequency</td><td>1</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>04/12/2023</td><td>14</td><td>04/18/2023</td><td>Present</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Dyspnea</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/12/2023</td><td>14</td><td>04/26/2023</td><td>Shortness of breath with minimal exertion; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Alopecia</td><td>2</td><td>No</td><td>Definite</td><td>Definite</td><td>04/12/2023</td><td>14</td><td>NA</td><td>Hair loss of >=50% normal for that individual that is readily apparent to others; a wig or hair piece is necessary if the patient desires to completely camouflage the hair loss; associated with psychosocial impact</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Mucositis oral</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>04/12/2023</td><td>14</td><td>NA</td><td>Moderate pain or ulcer that does not interfere with oral intake; modified diet indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Diarrhea</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>04/12/2023</td><td>14</td><td>NA</td><td>Increase of <4 stools per day over baseline; mild increase in ostomy output compared to baseline</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>04/19/2023</td><td>21</td><td>04/26/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Possible</td><td>Probable</td><td>04/19/2023</td><td>21</td><td>05/24/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Nausea</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>04/19/2023</td><td>21</td><td>NA</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Anemia</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>04/27/2023</td><td>29</td><td>NA</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Dyspnea</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/27/2023</td><td>29</td><td>NA</td><td>Shortness of breath with moderate exertion</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Rash maculo-papular</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>05/01/2023</td><td>33</td><td>NA</td><td>Macules/papules covering <10% BSA with or without symptoms (e.g., pruritus, burning, tightness)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Chest wall pain</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>05/04/2023</td><td>36</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Unrelated</td><td>Probable</td><td>05/25/2023</td><td>57</td><td>05/31/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Probable</td><td>Probable</td><td>06/01/2023</td><td>64</td><td>06/14/2023</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Dry skin</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/01/2023</td><td>64</td><td>NA</td><td>Covering <10% BSA and no associated erythema or pruritus</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Nail changes</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/01/2023</td><td>64</td><td>NA</td><td>Present</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>06/15/2023</td><td>78</td><td>06/22/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>07/06/2023</td><td>99</td><td>07/13/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/13/2023</td><td>106</td><td>NA</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Lung infection</td><td>3</td><td>Yes</td><td>Possible</td><td>Unrelated</td><td>07/21/2023</td><td>114</td><td>07/23/2023</td><td>IV antibiotic, antifungal, or antiviral intervention indicated; invasive intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Edema limbs</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>07/21/2023</td><td>114</td><td>NA</td><td>5 - 10% inter-limb discrepancy in volume or circumference at point of greatest visible difference; swelling or obscuration of anatomic architecture on close inspection</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-5"><td style="white-space: nowrap;">CTMS-5</td><td>Lung infection</td><td>2</td><td>No</td><td>Possible</td><td>Unrelated</td><td>07/23/2023</td><td>116</td><td>NA</td><td>Moderate symptoms; oral intervention indicated (e.g., antibiotic, antifungal, or antiviral)</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Skin infection</td><td>2</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>07/13/2023</td><td>7</td><td>07/23/2023</td><td>Oral intervention indicated (e.g., antibiotic, antifungal, or antiviral)</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Thromboembolic event</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>07/13/2023</td><td>7</td><td>10/26/2023</td><td>Medical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/24/2023</td><td>18</td><td>10/26/2023</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Anemia</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>08/01/2023</td><td>26</td><td>08/10/2023</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>08/10/2023</td><td>35</td><td>09/06/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Hypokalemia</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>08/10/2023</td><td>35</td><td>09/22/2023</td><td><LLN - 3.0 mmol/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Lung infection</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>08/23/2023</td><td>48</td><td>09/06/2023</td><td>Moderate symptoms; oral intervention indicated (e.g., antibiotic, antifungal, or antiviral)</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Lung infection</td><td>3</td><td>Yes</td><td>Possible</td><td>Possible</td><td>09/06/2023</td><td>62</td><td>09/11/2023</td><td>IV antibiotic, antifungal, or antiviral intervention indicated; invasive intervention indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Dyspnea</td><td>2</td><td>Yes</td><td>Possible</td><td>Possible</td><td>09/06/2023</td><td>62</td><td>09/12/2023</td><td>Shortness of breath with minimal exertion; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Anemia</td><td>3</td><td>No</td><td>Probable</td><td>Probable</td><td>09/06/2023</td><td>62</td><td>09/22/2023</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Lung infection</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>09/11/2023</td><td>67</td><td>09/13/2023</td><td>Moderate symptoms; oral intervention indicated (e.g., antibiotic, antifungal, or antiviral)</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Hypokalemia</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>09/22/2023</td><td>78</td><td>10/26/2023</td><td><3.0 - 2.5 mmol/L; hospitalization indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Anemia</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>09/22/2023</td><td>78</td><td>10/26/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="Yes" data-grade="4" data-subject="CTMS-6"><td style="white-space: nowrap;">CTMS-6</td><td>Dyspnea</td><td>4</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>10/02/2023</td><td>88</td><td>10/26/2023</td><td>Life-threatening consequences; urgent intervention indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Febrile neutropenia</td><td>3</td><td>Yes</td><td>Definite</td><td>Unlikely</td><td>07/11/2023</td><td>8</td><td>07/13/2023</td><td>ANC <1000/mm3 with a single temperature of >38.3 degrees C (101 degrees F) or a sustained temperature of >=38 degrees C (100.4 degrees F) for more than one hour</td></tr> 
+<tr data-aeser="Yes" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Hypokalemia</td><td>1</td><td>Yes</td><td>Unlikely</td><td>Unlikely</td><td>07/11/2023</td><td>8</td><td>07/13/2023</td><td><LLN - 3.0 mmol/L</td></tr> 
+<tr data-aeser="Yes" data-grade="4" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>4</td><td>Yes</td><td>Definite</td><td>Unlikely</td><td>07/11/2023</td><td>8</td><td>07/19/2023</td><td><25,000/mm3; <25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Alanine aminotransferase increased</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/11/2023</td><td>8</td><td>07/24/2023</td><td>>ULN - 3.0 x ULN if baseline was normal; 1.5 - 3.0 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Fever</td><td>1</td><td>No</td><td>Unrelated</td><td>Possible</td><td>07/12/2023</td><td>9</td><td>07/12/2023</td><td>38.0 - 39.0 degrees C (100.4 - 102.2 degrees F)</td></tr> 
+<tr data-aeser="Yes" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Hypotension</td><td>1</td><td>Yes</td><td>Unlikely</td><td>Unlikely</td><td>07/12/2023</td><td>9</td><td>07/12/2023</td><td>Asymptomatic, intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Allergic reaction</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>07/13/2023</td><td>10</td><td>07/13/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anorexia</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>07/17/2023</td><td>14</td><td>10/24/2023</td><td>Oral intake altered without significant weight loss or malnutrition; oral nutritional supplements indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>3</td><td>Yes</td><td>Definite</td><td>Unlikely</td><td>07/19/2023</td><td>16</td><td>07/23/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>07/19/2023</td><td>16</td><td>08/20/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Definite</td><td>Probable</td><td>07/24/2023</td><td>21</td><td>07/31/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="4" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>4</td><td>Yes</td><td>Definite</td><td>Unlikely</td><td>08/09/2023</td><td>37</td><td>08/21/2023</td><td><25,000/mm3; <25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>3</td><td>Yes</td><td>Probable</td><td>Unlikely</td><td>08/21/2023</td><td>49</td><td>09/06/2023</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Definite</td><td>Unrelated</td><td>08/21/2023</td><td>49</td><td>09/06/2023</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Dyspepsia</td><td>2</td><td>No</td><td>Unrelated</td><td>Probable</td><td>09/01/2023</td><td>60</td><td>10/25/2023</td><td>Moderate symptoms; medical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>09/06/2023</td><td>65</td><td>09/26/2023</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Peripheral motor neuropathy</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>09/06/2023</td><td>65</td><td>NA</td><td>Asymptomatic; clinical or diagnostic observations only</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Purpura</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/26/2023</td><td>85</td><td>09/30/2023</td><td>Combined area of lesions covering <10% BSA</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>3</td><td>Yes</td><td>Probable</td><td>Possible</td><td>09/27/2023</td><td>86</td><td>10/03/2023</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Hypotension</td><td>3</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>10/02/2023</td><td>91</td><td>10/03/2023</td><td>Medical intervention indicated; hospitalization indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Definite</td><td>Possible</td><td>10/02/2023</td><td>91</td><td>10/08/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Definite</td><td>Possible</td><td>10/02/2023</td><td>91</td><td>10/08/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>1</td><td>No</td><td>Probable</td><td>Possible</td><td>10/09/2023</td><td>98</td><td>10/15/2023</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>1</td><td>No</td><td>Probable</td><td>Possible</td><td>10/09/2023</td><td>98</td><td>10/15/2023</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Probable</td><td>Possible</td><td>10/09/2023</td><td>98</td><td>06/30/2024</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>2</td><td>No</td><td>Probable</td><td>Possible</td><td>10/16/2023</td><td>105</td><td>03/25/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Dysgeusia</td><td>1</td><td>No</td><td>Probable</td><td>Unrelated</td><td>12/04/2023</td><td>154</td><td>09/01/2024</td><td>Altered taste but no change in diet</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Pain</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>12/31/2023</td><td>181</td><td>01/15/2024</td><td>Moderate pain; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Alanine aminotransferase increased</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/04/2024</td><td>185</td><td>01/22/2024</td><td>>ULN - 3.0 x ULN if baseline was normal; 1.5 - 3.0 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Aspartate aminotransferase increased</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/04/2024</td><td>185</td><td>03/25/2024</td><td>>ULN - 3.0 x ULN if baseline was normal; 1.5 - 3.0 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Alkaline Phosphate Increased</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/04/2024</td><td>185</td><td>09/16/2024</td><td>>ULN - 2.5 x ULN if baseline was normal; 2.0 - 2.5 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Keratitis</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>02/07/2024</td><td>219</td><td>NA</td><td>Symptomatic; moderate decrease in visual acuity (best corrected visual acuity 20/40 and better or 3 lines or less decreased vision from known baseline)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Alanine aminotransferase increased</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>03/04/2024</td><td>245</td><td>03/25/2024</td><td>>ULN - 3.0 x ULN if baseline was normal; 1.5 - 3.0 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>06/24/2024</td><td>357</td><td>06/30/2024</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Definite</td><td>Unlikely</td><td>07/01/2024</td><td>364</td><td>07/10/2024</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unrelated</td><td>07/01/2024</td><td>364</td><td>NA</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Anorexia</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>08/12/2024</td><td>406</td><td>NA</td><td>Oral intake altered without significant weight loss or malnutrition; oral nutritional supplements indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Nausea</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>08/27/2024</td><td>421</td><td>NA</td><td>Oral intake decreased without significant weight loss, dehydration or malnutrition</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Fatigue</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/02/2024</td><td>427</td><td>10/07/2024</td><td>Fatigue not relieved by rest, limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Dysgeusia</td><td>2</td><td>No</td><td>Possible</td><td>Unrelated</td><td>09/02/2024</td><td>427</td><td>NA</td><td>Altered taste with change in diet (e.g., oral supplements); noxious or unpleasant taste; loss of taste</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Dry mouth</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/02/2024</td><td>427</td><td>NA</td><td>Symptomatic (e.g., dry or thick saliva) without significant dietary alteration; unstimulated saliva flow >0.2 ml/min</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Pain in extremity</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/02/2024</td><td>427</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Fatigue</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>10/07/2024</td><td>462</td><td>NA</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-7"><td style="white-space: nowrap;">CTMS-7</td><td>Paresthesia</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>10/07/2024</td><td>462</td><td>NA</td><td>Mild symptoms</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Weight loss</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>07/07/2023</td><td>1</td><td>11/22/2023</td><td>5 to <10% from baseline; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Probable</td><td>Possible</td><td>07/20/2023</td><td>14</td><td>07/28/2023</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/28/2023</td><td>22</td><td>08/17/2023</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Possible</td><td>08/04/2023</td><td>29</td><td>08/17/2023</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>08/25/2023</td><td>50</td><td>11/22/2023</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Fever</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>08/31/2023</td><td>56</td><td>08/31/2023</td><td>38.0 - 39.0 degrees C (100.4 - 102.2 degrees F)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Cough</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>09/01/2023</td><td>57</td><td>11/22/2023</td><td>Mild symptoms; nonprescription intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Dysgeusia</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>09/08/2023</td><td>64</td><td>11/22/2023</td><td>Altered taste but no change in diet</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>09/14/2023</td><td>70</td><td>09/22/2023</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Flank pain</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/19/2023</td><td>75</td><td>11/22/2023</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-8"><td style="white-space: nowrap;">CTMS-8</td><td>Thromboembolic event</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/22/2023</td><td>78</td><td>11/22/2023</td><td>Medical intervention not indicated (e.g., superficial thrombosis)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Pruritus</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/10/2023</td><td>0</td><td>08/25/2023</td><td>Mild or localized; topical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Vertigo</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>07/10/2023</td><td>0</td><td>NA</td><td>Mild symptoms</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Vomiting</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>07/12/2023</td><td>2</td><td>07/12/2023</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Diarrhea</td><td>3</td><td>No</td><td>Probable</td><td>Possible</td><td>07/18/2023</td><td>8</td><td>07/24/2023</td><td>Increase of >=7 stools per day over baseline; hospitalization indicated; severe increase in ostomy output compared to baseline; limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Vomiting</td><td>2</td><td>No</td><td>Probable</td><td>Possible</td><td>07/18/2023</td><td>8</td><td>07/24/2023</td><td>Outpatient IV hydration; medical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Fever</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>07/20/2023</td><td>10</td><td>07/20/2023</td><td>38.0 - 39.0 degrees C (100.4 - 102.2 degrees F)</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-9"><td style="white-space: nowrap;">CTMS-9</td><td>Febrile neutropenia</td><td>3</td><td>Yes</td><td>Probable</td><td>Unlikely</td><td>07/20/2023</td><td>10</td><td>07/24/2023</td><td><25,000/mm3; <25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-10"><td style="white-space: nowrap;">CTMS-10</td><td>Vomiting</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>11/15/2023</td><td>0</td><td>01/12/2024</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-10"><td style="white-space: nowrap;">CTMS-10</td><td>Anemia</td><td>3</td><td>Yes</td><td>Possible</td><td>Possible</td><td>12/04/2023</td><td>19</td><td>01/02/2024</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Hyperglycemia</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>01/17/2024</td><td>0</td><td>01/31/2024</td><td>Abnormal glucose above baseline with no medical intervention</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Bloating</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/25/2024</td><td>8</td><td>01/31/2024</td><td>No change in bowel function or oral intake</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Gastrointestinal pain</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/25/2024</td><td>8</td><td>01/31/2024</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/31/2024</td><td>14</td><td>02/13/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Alkaline Phosphate Increased</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>01/31/2024</td><td>14</td><td>02/13/2024</td><td>>ULN - 2.5 x ULN if baseline was normal; 2.0 - 2.5 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Hyperglycemia</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>01/31/2024</td><td>14</td><td>05/07/2024</td><td>Change in daily management from baseline for a diabetic; oral antiglycemic agent initiated; workup for diabetes</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Diarrhea</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>01/31/2024</td><td>14</td><td>06/25/2024</td><td>Increase of <4 stools per day over baseline; mild increase in ostomy output compared to baseline</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>02/13/2024</td><td>27</td><td>02/23/2024</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>02/13/2024</td><td>27</td><td>02/23/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>02/13/2024</td><td>27</td><td>03/05/2024</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>02/27/2024</td><td>41</td><td>03/12/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>03/12/2024</td><td>55</td><td>03/28/2024</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>2</td><td>No</td><td>Probable</td><td>Unrelated</td><td>03/28/2024</td><td>71</td><td>06/04/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Pain in extremity</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/02/2024</td><td>76</td><td>06/25/2024</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>06/04/2024</td><td>139</td><td>06/11/2024</td><td>Hgb <8.0 g/dL; <4.9 mmol/L; <80 g/L; transfusion indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>06/11/2024</td><td>146</td><td>NA</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/18/2024</td><td>153</td><td>NA</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-11"><td style="white-space: nowrap;">CTMS-11</td><td>Pain in extremity</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>06/25/2024</td><td>160</td><td>NA</td><td>Moderate pain; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Definite</td><td>Unrelated</td><td>01/24/2024</td><td>7</td><td>01/26/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>White blood cell decreased</td><td>3</td><td>No</td><td>Definite</td><td>Unrelated</td><td>01/24/2024</td><td>7</td><td>01/26/2024</td><td><2000 - 1000/mm3; <2.0 - 1.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Mucositis oral</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>01/24/2024</td><td>7</td><td>NA</td><td>Asymptomatic or mild symptoms; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="4" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>4</td><td>No</td><td>Probable</td><td>Unlikely</td><td>01/26/2024</td><td>9</td><td>01/29/2024</td><td><500/mm3; <0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>White blood cell decreased</td><td>2</td><td>No</td><td>Probable</td><td>Unlikely</td><td>01/26/2024</td><td>9</td><td>01/29/2024</td><td><3000 - 2000/mm3; <3.0 - 2.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>2</td><td>No</td><td>Definite</td><td>Unlikely</td><td>02/05/2024</td><td>19</td><td>02/12/2024</td><td><1500 - 1000/mm3; <1.5 - 1.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>02/05/2024</td><td>19</td><td>03/05/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Injection site reaction</td><td>1</td><td>No</td><td>Unlikely</td><td>Probable</td><td>02/21/2024</td><td>35</td><td>02/27/2024</td><td>Tenderness with or without associated symptoms (e.g., warmth, erythema, itching)</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Anemia</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>03/05/2024</td><td>48</td><td>03/22/2024</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Anorexia</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>03/05/2024</td><td>48</td><td>03/22/2024</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Peripheral motor neuropathy</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>03/05/2024</td><td>48</td><td>NA</td><td>Moderate symptoms; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Injection site reaction</td><td>1</td><td>No</td><td>Unlikely</td><td>Probable</td><td>03/07/2024</td><td>50</td><td>NA</td><td>Tenderness with or without associated symptoms (e.g., warmth, erythema, itching)</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Unlikely</td><td>03/14/2024</td><td>57</td><td>03/18/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Diarrhea</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>03/23/2024</td><td>66</td><td>03/23/2024</td><td>Increase of <4 stools per day over baseline; mild increase in ostomy output compared to baseline</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Thrush</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>04/09/2024</td><td>83</td><td>04/29/2024</td><td>Oral intervention indicated (e.g., antifungal)</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>04/15/2024</td><td>89</td><td>04/16/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Dyspnea</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/16/2024</td><td>90</td><td>NA</td><td>Shortness of breath with moderate exertion</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Possible</td><td>Unrelated</td><td>04/23/2024</td><td>97</td><td>04/25/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>White blood cell decreased</td><td>3</td><td>No</td><td>Probable</td><td>Unrelated</td><td>04/23/2024</td><td>97</td><td>04/25/2024</td><td><2000 - 1000/mm3; <2.0 - 1.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Laryngospasm</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>07/30/2024</td><td>195</td><td>NA</td><td>Transient episode; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-12"><td style="white-space: nowrap;">CTMS-12</td><td>Nasal congestion</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/07/2024</td><td>234</td><td>NA</td><td>Mild symptoms; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Pain</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>09/01/2022</td><td>-510</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Nausea</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>01/22/2023</td><td>-367</td><td>NA</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Unlikely</td><td>01/31/2024</td><td>7</td><td>02/01/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Neutrophil count decreased</td><td>2</td><td>No</td><td>Probable</td><td>Unlikely</td><td>02/01/2024</td><td>8</td><td>02/07/2024</td><td><1500 - 1000/mm3; <1.5 - 1.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Pain</td><td>1</td><td>No</td><td>Probable</td><td>Unrelated</td><td>02/07/2024</td><td>14</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Sore throat</td><td>1</td><td>No</td><td>Probable</td><td>Unrelated</td><td>02/07/2024</td><td>14</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Watering eyes</td><td>1</td><td>No</td><td>Probable</td><td>Unrelated</td><td>02/14/2024</td><td>21</td><td>NA</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Abdominal pain</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/06/2024</td><td>42</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Anxiety</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/06/2024</td><td>42</td><td>NA</td><td>Mild symptoms; intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-13"><td style="white-space: nowrap;">CTMS-13</td><td>Constipation</td><td>2</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>03/30/2024</td><td>66</td><td>NA</td><td>Persistent symptoms with regular use of laxatives or enemas; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-14"><td style="white-space: nowrap;">CTMS-14</td><td>Blood bilirubin increased</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>02/21/2024</td><td>0</td><td>NA</td><td>>ULN - 1.5 x ULN if baseline was normal; > 1.0 - 1.5 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-14"><td style="white-space: nowrap;">CTMS-14</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/06/2024</td><td>14</td><td>03/13/2024</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-14"><td style="white-space: nowrap;">CTMS-14</td><td>Anemia</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/06/2024</td><td>14</td><td>NA</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-14"><td style="white-space: nowrap;">CTMS-14</td><td>Hypertension</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>03/06/2024</td><td>14</td><td>NA</td><td>Adult: Systolic BP 140 - 159 mm Hg or diastolic BP 90 - 99 mm Hg if previously WNL; change in baseline medical intervention indicated; recurrent or persistent (>=24 hrs); symptomatic increase by >20 mm Hg (diastolic) or to >140/90 mm Hg; monotherapy indicated initiated; Pediatric and adolescent: Recurrent or persistent (>=24 hrs) BP >ULN; monotherapy indicated; systolic and /or diastolic BP between the 95th percentile and 5 mmHg above the 99th percentile; Adolescent: Systolic between 130-139 or diastolic between 80-89 even if < 95th percentile</td></tr> 
+<tr data-aeser="Yes" data-grade="3" data-subject="CTMS-14"><td style="white-space: nowrap;">CTMS-14</td><td>Dyspnea</td><td>3</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>03/23/2024</td><td>31</td><td>03/26/2024</td><td>Shortness of breath at rest; limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Alkaline Phosphate Increased</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/03/2024</td><td>0</td><td>05/07/2024</td><td>>ULN - 2.5 x ULN if baseline was normal; 2.0 - 2.5 x baseline if baseline was abnormal</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Fatigue</td><td>2</td><td>No</td><td>Possible</td><td>Unlikely</td><td>04/05/2024</td><td>2</td><td>04/15/2024</td><td>Fatigue not relieved by rest, limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Nausea</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>04/09/2024</td><td>6</td><td>04/09/2024</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Hypoxia</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>04/15/2024</td><td>12</td><td>04/15/2024</td><td>Decreased oxygen saturation at rest (e.g., pulse oximeter <88% or PaO2 <=55 mm Hg)</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Dyspnea</td><td>3</td><td>No</td><td>Possible</td><td>Possible</td><td>04/15/2024</td><td>12</td><td>04/18/2024</td><td>Shortness of breath at rest; limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Fatigue</td><td>3</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/15/2024</td><td>12</td><td>05/07/2024</td><td>Fatigue not relieved by rest, limiting self care ADL</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Anorexia</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/15/2024</td><td>12</td><td>05/07/2024</td><td>Oral intake altered without significant weight loss or malnutrition; oral nutritional supplements indicated</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Pneumonia</td><td>3</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/16/2024</td><td>13</td><td>05/01/2024</td><td>Severe symptoms; limiting self care ADL; oxygen indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Hypoalbuminemia</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/16/2024</td><td>13</td><td>05/07/2024</td><td><LLN - 3 g/dL; <LLN - 30 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Probable</td><td>Unlikely</td><td>04/17/2024</td><td>14</td><td>05/07/2024</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Dyspnea</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/19/2024</td><td>16</td><td>05/01/2024</td><td>Shortness of breath with minimal exertion; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Generalized muscle weakness</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>04/20/2024</td><td>17</td><td>05/07/2024</td><td>Symptomatic evident on physical exam; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-15"><td style="white-space: nowrap;">CTMS-15</td><td>Vomiting</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/24/2024</td><td>21</td><td>04/24/2024</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>04/11/2024</td><td>0</td><td>NA</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Anorexia</td><td>1</td><td>No</td><td>Possible</td><td>Unlikely</td><td>04/19/2024</td><td>8</td><td>05/19/2024</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Constipation</td><td>1</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>04/25/2024</td><td>14</td><td>06/20/2024</td><td>Occasional or intermittent symptoms; occasional use of stool softeners, laxatives, dietary modification, or enema</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>05/09/2024</td><td>28</td><td>05/23/2024</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Rash maculo-papular</td><td>1</td><td>No</td><td>Unrelated</td><td>Possible</td><td>05/09/2024</td><td>28</td><td>05/30/2024</td><td>Macules/papules covering <10% BSA with or without symptoms (e.g., pruritus, burning, tightness)</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Seizure</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>05/19/2024</td><td>38</td><td>05/19/2024</td><td>Brief generalized seizure</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Anorexia</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>05/19/2024</td><td>38</td><td>05/25/2024</td><td>Oral intake altered without significant weight loss or malnutrition; oral nutritional supplements indicated</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Dizziness</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>05/19/2024</td><td>38</td><td>05/25/2024</td><td>Moderate unsteadiness or sensation of movement; limiting instrumental ADL</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Anemia</td><td>1</td><td>No</td><td>Possible</td><td>Unrelated</td><td>05/23/2024</td><td>42</td><td>NA</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Blurred Vision</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>05/25/2024</td><td>44</td><td>06/20/2024</td><td>Intervention not indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-16"><td style="white-space: nowrap;">CTMS-16</td><td>Dizziness</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>05/25/2024</td><td>44</td><td>06/20/2024</td><td>Mild unsteadiness or sensation of movement</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Back pain</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>06/05/2024</td><td>0</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Nausea</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/12/2024</td><td>7</td><td>06/27/2024</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Anorexia</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/12/2024</td><td>7</td><td>NA</td><td>Loss of appetite without alteration in eating habits</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Fatigue</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/12/2024</td><td>7</td><td>NA</td><td>Fatigue relieved by rest</td></tr> 
+<tr data-aeser="No" data-grade="4" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Neutrophil count decreased</td><td>4</td><td>No</td><td>Probable</td><td>Unrelated</td><td>06/19/2024</td><td>14</td><td>06/21/2024</td><td><500/mm3; <0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Platelet count decreased</td><td>1</td><td>No</td><td>Probable</td><td>Probable</td><td>06/19/2024</td><td>14</td><td>06/21/2024</td><td><LLN - 75,000/mm3; <LLN - 75.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Headache</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/19/2024</td><td>14</td><td>06/27/2024</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Mucositis oral</td><td>2</td><td>No</td><td>Possible</td><td>Possible</td><td>06/19/2024</td><td>14</td><td>07/17/2024</td><td>Moderate pain or ulcer that does not interfere with oral intake; modified diet indicated</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Anemia</td><td>2</td><td>No</td><td>Possible</td><td>Unrelated</td><td>06/19/2024</td><td>14</td><td>NA</td><td>Hgb <10.0 - 8.0 g/dL; <6.2 - 4.9 mmol/L; <100 - 80g/L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Dry mouth</td><td>1</td><td>No</td><td>Possible</td><td>Possible</td><td>06/19/2024</td><td>14</td><td>NA</td><td>Symptomatic (e.g., dry or thick saliva) without significant dietary alteration; unstimulated saliva flow >0.2 ml/min</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Unrelated</td><td>06/21/2024</td><td>16</td><td>06/27/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Pain in extremity</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>06/27/2024</td><td>22</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Platelet count decreased</td><td>2</td><td>No</td><td>Probable</td><td>Probable</td><td>07/03/2024</td><td>28</td><td>07/17/2024</td><td><75,000 - 50,000/mm3; <75.0 - 50.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-17"><td style="white-space: nowrap;">CTMS-17</td><td>Platelet count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Probable</td><td>07/17/2024</td><td>42</td><td>NA</td><td><50,000 - 25,000/mm3; <50.0 - 25.0 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-18"><td style="white-space: nowrap;">CTMS-18</td><td>Anemia</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>06/19/2024</td><td>0</td><td>NA</td><td>Hemoglobin (Hgb) <LLN - 10.0 g/dL; <LLN - 6.2 mmol/L; <LLN - 100 g/L</td></tr> 
+<tr data-aeser="No" data-grade="3" data-subject="CTMS-18"><td style="white-space: nowrap;">CTMS-18</td><td>Neutrophil count decreased</td><td>3</td><td>No</td><td>Probable</td><td>Unlikely</td><td>06/26/2024</td><td>7</td><td>06/28/2024</td><td><1000 - 500/mm3; <1.0 - 0.5 x 10e9 /L</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-18"><td style="white-space: nowrap;">CTMS-18</td><td>Back pain</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>07/03/2024</td><td>14</td><td>NA</td><td>Mild pain</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-19"><td style="white-space: nowrap;">CTMS-19</td><td>Dyspnea</td><td>2</td><td>No</td><td>Unlikely</td><td>Unlikely</td><td>09/27/2024</td><td>9</td><td>10/01/2024</td><td>Shortness of breath with minimal exertion; limiting instrumental ADL</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-19"><td style="white-space: nowrap;">CTMS-19</td><td>Dyspnea</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>10/01/2024</td><td>13</td><td>10/05/2024</td><td>Shortness of breath with minimal exertion; limiting instrumental ADL</td></tr> 
+<tr data-aeser="Yes" data-grade="2" data-subject="CTMS-19"><td style="white-space: nowrap;">CTMS-19</td><td>Sinus tachycardia</td><td>2</td><td>Yes</td><td>Unrelated</td><td>Unrelated</td><td>10/01/2024</td><td>13</td><td>10/05/2024</td><td>Symptomatic; non-urgent medical intervention indicated</td></tr> 
+<tr data-aeser="No" data-grade="1" data-subject="CTMS-19"><td style="white-space: nowrap;">CTMS-19</td><td>Dyspnea</td><td>1</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>10/06/2024</td><td>18</td><td>NA</td><td>Shortness of breath with moderate exertion</td></tr> 
+<tr data-aeser="No" data-grade="2" data-subject="CTMS-19"><td style="white-space: nowrap;">CTMS-19</td><td>Skin and subcutaneous tissue disorders - Other, specify (Skin Lesions Upper Arm, back torso)</td><td>2</td><td>No</td><td>Unrelated</td><td>Unrelated</td><td>11/06/2024</td><td>49</td><td>NA</td><td>Moderate; minimal, local or noninvasive intervention indicated; limiting age-apropriate intrumental ADL</td></tr> 
+
+        </tbody>
+        </table>
     </div>
+
     <script>
-        const data = [
-            { "SubjectSortable": "CTMS-01", "AE": "Injection site reaction", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": "2/23/2023" },
-
-            { "SubjectSortable": "CTMS-01", "AE": "Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "More Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Even More Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "So much Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Still not done with Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Are you seriously still having Dyspnea", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "12/21/2022", "DaysSinceC1D1Start": 0, "dAEEndDate": null },
 
 
-            { "SubjectSortable": "CTMS-01", "AE": "Peripheral motor neuropathy", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Probable", "SDX7320": "Unlikely", "dAEStartDate": "1/8/2023", "DaysSinceC1D1Start": 18, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Aspartate aminotransferase increased", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/11/2023", "DaysSinceC1D1Start": 21, "dAEEndDate": "2/1/2023" },
-            { "SubjectSortable": "CTMS-01", "AE": "Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
+            // Show or hide the patient dropdown based on checkbox state
+        function toggleDropdown() {
+            const checkbox = document.getElementById("selectPatient");
+            const dropdown = document.getElementById("patientDropdown");
+            dropdown.style.display = checkbox.checked ? "inline" : "none";
+        }
 
-            { "SubjectSortable": "CTMS-01", "AE": "More Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Even More Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "So much Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Still not done with Fatigue", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-01", "AE": "Are you seriously still Fatigued", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "1/18/2023", "DaysSinceC1D1Start": 28, "dAEEndDate": null },
-	    
+        // Function to filter data based on selected checkboxes and dropdown
+        function filterData() {
+            const saeOnly = document.getElementById("saeOnly").checked;
+            const grade1 = document.getElementById("grade1").checked;
+            const grade2 = document.getElementById("grade2").checked;
+            const grade3 = document.getElementById("grade3").checked;
+            const grade4 = document.getElementById("grade4").checked;
+            const selectPatient = document.getElementById("selectPatient").checked;
+            const selectedPatient = document.getElementById("patientDropdown").value;
 
-            { "SubjectSortable": "CTMS-02", "AE": "Nausea", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/21/2023", "DaysSinceC1D1Start": 60, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "More Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "Even More Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "So much Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "Still not done Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "Are you seriously still Vomiting", "CTCAE.Grade": 3, "SAE": "Yes", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "2/22/2023", "DaysSinceC1D1Start": 61, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-02", "AE": "Headache", "CTCAE.Grade": 1, "SAE": "No", "Eribulin": "Unrelated", "SDX7320": "Unrelated", "dAEStartDate": "2/23/2023", "DaysSinceC1D1Start": 62, "dAEEndDate": null },
-            { "SubjectSortable": "CTMS-03", "AE": "Dizziness", "CTCAE.Grade": 2, "SAE": "No", "Eribulin": "Related", "SDX7320": "Unrelated", "dAEStartDate": "3/1/2023", "DaysSinceC1D1Start": 69, "dAEEndDate": null }
-        ];
+            const table = document.getElementById("eventsTable");
+            const rows = table.getElementsByTagName("tr");
 
-        const tbody = document.querySelector('#aeTable tbody');
+            for (let i = 1; i < rows.length; i++) { // Start from 1 to skip table header row
+                const row = rows[i];
+                const aeser = row.getAttribute("data-aeser");
+                const grade = row.getAttribute("data-grade");
+                const subject = row.getAttribute("data-subject");
 
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.setAttribute('data-sae', item.SAE);
-            row.setAttribute('data-grade', item['CTCAE.Grade']);
-            row.innerHTML = `
-                <td>${item.SubjectSortable}</td>
-                <td>${item.AE}</td>
-                <td>${item['CTCAE.Grade']}</td>
-                <td>${item.SAE}</td>
-                <td>${item.Eribulin}</td>
-                <td>${item.SDX7320}</td>
-                <td>${item.dAEStartDate}</td>
-                <td>${item.DaysSinceC1D1Start}</td>
-                <td>${item.dAEEndDate}</td>
-            `;
-            tbody.appendChild(row);
-        });
+                let showRow = true;
+
+                // Apply SAE Only filter
+                if (saeOnly && aeser !== "Yes") {
+                    showRow = false;
+                }
+
+                // Apply Grade filter
+                if (showRow && (grade1 || grade2 || grade3 || grade4)) {
+                    const gradeFilter = (
+                        (grade1 && grade === "1") ||
+                        (grade2 && grade === "2") ||
+                        (grade3 && grade === "3") ||
+                        (grade4 && grade === "4")
+                    );
+                    showRow = gradeFilter;
+                }
+
+                // Apply Select Patient filter
+                if (showRow && selectPatient && selectedPatient) {
+                    showRow = subject === selectedPatient;
+                }
+
+                // Show or hide the row based on filter conditions
+                row.style.display = showRow ? "" : "none";
+            }
+        }
     </script>
 </body>
 </html>
