@@ -119,10 +119,15 @@
                 console.log('LOC 13');
             });
 
+            document.getElementById('tab-scatter').addEventListener('click', function() {
+                showContent('ScatterplotPctChange.html', 'tab-scatter');
+                labValuesSelect.style.display = 'none'; // Hide the select if visible
+                console.log('LOC 14.1');
+            });
             document.getElementById('tab-aes').addEventListener('click', function() {
                 showContent('AEs.html', 'tab-aes');
                 labValuesSelect.style.display = 'none'; // Hide the select if visible
-                console.log('LOC 14');
+                console.log('LOC 14.2');
             });
             document.getElementById('tab-exposure').addEventListener('click', function() {
                 showContent('Exposure_toplevel.html', 'tab-exposure');
@@ -178,7 +183,7 @@
                 <option value="pp/102_pp_CTMS-19.html">CTMS-19</options>
             </select>
             </div>
-
+            <div id="tab-scatter">% Change Scatterplots</div>
             <div id="tab-aes">Adverse Events</div>
             <div id="tab-exposure">Exposure</div>
         </div>

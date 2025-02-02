@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Image Selector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin: 20px;
+    }
+    .menu {
+      margin-right: 20px;
+    }
+    .menu label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    #image-container {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    #image-container img {
+      <!-- max-width: 600px; -->
+      <!-- max-height: 400px; -->
+  width: 500px;  /* Set width */
+  height: auto;  /* Maintain aspect ratio */
+  max-width: 100%;  /* Ensure responsiveness */
+  max-height: 500px; /* Limit height */
+  border: 1px solid #ccc; /* Optional: Add a border */						     
+    }
+  </style>
+</head>
+<body>
+  <div class="menu">
+    <label for="dropdown1">Select X axis parameter: </label>
+    <select id="dropdown1">
+<option value="PctChange_Adiponectin">% Change Adiponectin</option> 
+<option value="PctChange_Albumin">% Change Albumin</option> 
+<option value="PctChange_Alkaline_Phosphatase">% Change Alkaline Phosphatase</option> 
+<option value="PctChange_ALT_(SGPT)">% Change ALT (SGPT)</option> 
+<option value="PctChange_AST_(SGOT)">% Change AST (SGOT)</option> 
+<option value="PctChange_Basophils">% Change Basophils</option> 
+<option value="PctChange_bFGF">% Change bFGF</option> 
+<option value="PctChange_bFGF_Strat_GT_3.5">% Change bFGF (Stratified baseline >= 3.5)</option> 
+<option value="PctChange_Bicarbonate">% Change Bicarbonate</option> 
+<option value="PctChange_Calcium">% Change Calcium</option> 
+<option value="PctChange_Chloride">% Change Chloride</option> 
+<option value="PctChange_Creatine_Kinase">% Change Creatine Kinase</option> 
+<option value="PctChange_CRP">% Change CRP</option> 
+<option value="PctChange_Direct_Bilirubin">% Change Direct Bilirubin</option> 
+<option value="PctChange_Eosinophils">% Change Eosinophils</option> 
+<option value="PctChange_Free_Fatty_acids">% Change Free Fatty acids</option> 
+<option value="PctChange_Glucose">% Change Glucose</option> 
+<option value="PctChange_HbA1c">% Change HbA1c</option> 
+<option value="PctChange_HDL_Cholesterol_(Direct)">% Change HDL Cholesterol (Direct)</option> 
+<option value="PctChange_Hematocrit">% Change Hematocrit</option> 
+<option value="PctChange_Hemoglobin">% Change Hemoglobin</option> 
+<option value="PctChange_IGF_1">% Change IGF 1</option> 
+<option value="PctChange_IL_6">% Change IL 6</option> 
+<option value="PctChange_Indirect_Bilirubin">% Change Indirect Bilirubin</option> 
+<option value="PctChange_INR">% Change INR</option> 
+<option value="PctChange_Insulin">% Change Insulin</option> 
+<option value="PctChange_Insulin_Strat_GT_20">% Change Insulin (stratified baseline >= 20)</option> 
+<option value="PctChange_LDL_Cholesterol_(Direct)">% Change LDL Cholesterol (Direct)</option> 
+<option value="PctChange_Leptin">% Change Leptin</option> 
+<option value="PctChange_Lymphocytes">% Change Lymphocytes</option> 
+<option value="PctChange_Magnesium">% Change Magnesium</option> 
+<option value="PctChange_MCP_1">% Change MCP 1</option> 
+<option value="PctChange_Monocytes">% Change Monocytes</option> 
+<option value="PctChange_Neutrophils">% Change Neutrophils</option> 
+<option value="PctChange_Phosphorous">% Change Phosphorous</option> 
+<option value="PctChange_Platelet_Count">% Change Platelet Count</option> 
+<option value="PctChange_Potassium">% Change Potassium</option> 
+<option value="PctChange_PT(prothrombin_time)">% Change PT(prothrombin time)</option> 
+<option value="PctChange_PTT">% Change PTT</option> 
+<option value="PctChange_RBC_Count">% Change RBC Count</option> 
+<option value="PctChange_Serum_Creatinine">% Change Serum Creatinine</option> 
+<option value="PctChange_Sodium">% Change Sodium</option> 
+<option value="PctChange_T3">% Change T3</option> 
+<option value="PctChange_T4">% Change T4</option> 
+<option value="PctChange_TNF_Alpha">% Change TNF Alpha</option> 
+<option value="PctChange_Total_Bilirubin">% Change Total Bilirubin</option> 
+<option value="PctChange_Total_Cholesterol">% Change Total Cholesterol</option> 
+<option value="PctChange_Total_Protein">% Change Total Protein</option> 
+<option value="PctChange_Triglycerides">% Change Triglycerides</option> 
+<option value="PctChange_TSH">% Change TSH</option> 
+<option value="PctChange_Urea_Nitrogen_(BUN)">% Change Urea Nitrogen (BUN)</option> 
+<option value="PctChange_Uric_Acid">% Change Uric Acid</option> 
+<option value="PctChange_VEGF_A">% Change VEGF A</option> 
+<option value="PctChange_VEGF_C">% Change VEGF C</option> 
+<option value="PctChange_VEGF_D">% Change VEGF D</option> 
+<option value="PctChange_VLDL_(Direct)">% Change VLDL (Direct)</option> 
+<option value="PctChange_VSWT">% Change Weight</option> 
+<option value="PctChange_WBC_Count">% Change WBC Count</option> 
+
+
+    </select>
+
+    <label for="dropdown2">Select Y axis parameter: </label>
+    <select id="dropdown2">
+<option value="PctChange_Adiponectin">% Change Adiponectin</option> 
+<option value="PctChange_Albumin">% Change Albumin</option> 
+<option value="PctChange_Alkaline_Phosphatase">% Change Alkaline Phosphatase</option> 
+<option value="PctChange_ALT_(SGPT)">% Change ALT (SGPT)</option> 
+<option value="PctChange_AST_(SGOT)">% Change AST (SGOT)</option> 
+<option value="PctChange_Basophils">% Change Basophils</option> 
+<option value="PctChange_bFGF">% Change bFGF</option> 
+<option value="PctChange_bFGF_Strat_GT_3.5">% Change bFGF (Stratified baseline >= 3.5)</option> 
+<option value="PctChange_Bicarbonate">% Change Bicarbonate</option> 
+<option value="PctChange_Calcium">% Change Calcium</option> 
+<option value="PctChange_Chloride">% Change Chloride</option> 
+<option value="PctChange_Creatine_Kinase">% Change Creatine Kinase</option> 
+<option value="PctChange_CRP">% Change CRP</option> 
+<option value="PctChange_Direct_Bilirubin">% Change Direct Bilirubin</option> 
+<option value="PctChange_Eosinophils">% Change Eosinophils</option> 
+<option value="PctChange_Free_Fatty_acids">% Change Free Fatty acids</option> 
+<option value="PctChange_Glucose">% Change Glucose</option> 
+<option value="PctChange_HbA1c">% Change HbA1c</option> 
+<option value="PctChange_HDL_Cholesterol_(Direct)">% Change HDL Cholesterol (Direct)</option> 
+<option value="PctChange_Hematocrit">% Change Hematocrit</option> 
+<option value="PctChange_Hemoglobin">% Change Hemoglobin</option> 
+<option value="PctChange_IGF_1">% Change IGF 1</option> 
+<option value="PctChange_IL_6">% Change IL 6</option> 
+<option value="PctChange_Indirect_Bilirubin">% Change Indirect Bilirubin</option> 
+<option value="PctChange_INR">% Change INR</option> 
+<option value="PctChange_Insulin">% Change Insulin</option> 
+<option value="PctChange_Insulin_Strat_GT_20">% Change Insulin (stratified baseline >= 20)</option> 
+<option value="PctChange_LDL_Cholesterol_(Direct)">% Change LDL Cholesterol (Direct)</option> 
+<option value="PctChange_Leptin">% Change Leptin</option> 
+<option value="PctChange_Lymphocytes">% Change Lymphocytes</option> 
+<option value="PctChange_Magnesium">% Change Magnesium</option> 
+<option value="PctChange_MCP_1">% Change MCP 1</option> 
+<option value="PctChange_Monocytes">% Change Monocytes</option> 
+<option value="PctChange_Neutrophils">% Change Neutrophils</option> 
+<option value="PctChange_Phosphorous">% Change Phosphorous</option> 
+<option value="PctChange_Platelet_Count">% Change Platelet Count</option> 
+<option value="PctChange_Potassium">% Change Potassium</option> 
+<option value="PctChange_PT(prothrombin_time)">% Change PT(prothrombin time)</option> 
+<option value="PctChange_PTT">% Change PTT</option> 
+<option value="PctChange_RBC_Count">% Change RBC Count</option> 
+<option value="PctChange_Serum_Creatinine">% Change Serum Creatinine</option> 
+<option value="PctChange_Sodium">% Change Sodium</option> 
+<option value="PctChange_T3">% Change T3</option> 
+<option value="PctChange_T4">% Change T4</option> 
+<option value="PctChange_TNF_Alpha">% Change TNF Alpha</option> 
+<option value="PctChange_Total_Bilirubin">% Change Total Bilirubin</option> 
+<option value="PctChange_Total_Cholesterol">% Change Total Cholesterol</option> 
+<option value="PctChange_Total_Protein">% Change Total Protein</option> 
+<option value="PctChange_Triglycerides">% Change Triglycerides</option> 
+<option value="PctChange_TSH">% Change TSH</option> 
+<option value="PctChange_Urea_Nitrogen_(BUN)">% Change Urea Nitrogen (BUN)</option> 
+<option value="PctChange_Uric_Acid">% Change Uric Acid</option> 
+<option value="PctChange_VEGF_A">% Change VEGF A</option> 
+<option value="PctChange_VEGF_C">% Change VEGF C</option> 
+<option value="PctChange_VEGF_D">% Change VEGF D</option> 
+<option value="PctChange_VLDL_(Direct)">% Change VLDL (Direct)</option> 
+<option value="PctChange_VSWT">% Change Weight</option> 
+<option value="PctChange_WBC_Count">% Change WBC Count</option> 
+
+
+    </select>
+  </div>
+
+  <div id="image-container">
+    <img id="display-image" src="PleaseSelectParameters.jpg" alt="Selected Graph">
+  </div>
+
+  <script>
+    // JavaScript variables for the dropdown selections
+    const dropdown1 = document.getElementById('dropdown1');
+    const dropdown2 = document.getElementById('dropdown2');
+    const displayImage = document.getElementById('display-image');
+
+    // Function to update the image based on dropdown selections
+    function updateImage() {
+      const value1 = dropdown1.value;
+    const value2 = dropdown2.value;
+      console.log('LOC 01')
+      const newImageSrc = `${value1}_${value2}.jpg`;
+      console.log('LOC 02: '+newImageSrc);
+      newImageSrcWithDir = 'scatterplotpct/scatter_' + newImageSrc;
+      console.log('LOC 03: '+newImageSrcWithDir);
+      displayImage.src = newImageSrcWithDir;
+      displayImage.alt = `Graph for ${value1} and ${value2}`;
+    }
+
+    // Add event listeners to dropdown menus
+    dropdown1.addEventListener('change', updateImage);
+    dropdown2.addEventListener('change', updateImage);
+  </script>
+</body>
+</html>
