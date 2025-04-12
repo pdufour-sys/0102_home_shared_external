@@ -129,21 +129,26 @@
                 labValuesSelect.style.display = 'none'; // Hide the select if visible
                 console.log('LOC 14.2');
             });
+            document.getElementById('tab-tba').addEventListener('click', function() {
+                showContent('TBA_toplevel.html', 'tab-tba');
+                labValuesSelect.style.display = 'none'; // Hide the select if visible
+                console.log('LOC 14.2');
+            });
             document.getElementById('tab-exposure').addEventListener('click', function() {
                 showContent('Exposure_toplevel.html', 'tab-exposure');
                 labValuesSelect.style.display = 'none';
                 console.log('LOC 15');
             });
-            document.getElementById('tab-tba-pct').addEventListener('click', function() {
-                showContent('tba/102m_tba_pct.html', 'tab-tba-pct');
-                labValuesSelect.style.display = 'none';
-                console.log('LOC 16');
-            });
-            document.getElementById('tab-tba-abs').addEventListener('click', function() {
-                showContent('tba/102m_tba_abs.html', 'tab-tba-abs');
-                labValuesSelect.style.display = 'none';
-                console.log('LOC 17');
-            });
+            //document.getElementById('tab-tba-pct').addEventListener('click', function() {
+            //    showContent('tba/102m_tba_pct.html', 'tab-tba-pct');
+            //    labValuesSelect.style.display = 'none';
+            //    console.log('LOC 16');
+            //});
+            //document.getElementById('tab-tba-abs').addEventListener('click', function() {
+            //    showContent('tba/102m_tba_abs.html', 'tab-tba-abs');
+            //    labValuesSelect.style.display = 'none';
+            //    console.log('LOC 17');
+            //});
         });
         /* end block 4 */ 
     </script>
@@ -152,7 +157,7 @@
     <div class="top-area">
         <div class="upper">
             <h1>Aretha-1 EDC Overview</h1>
-            <h2>Aretha-1 SDX-0102 data of 3/07/25&nbsp;</h2>
+            <h2>Aretha-1 SDX-0102 data of 3/27/2025&nbsp;</h2>
             <img src="SynDevRxLogo.jpg" alt="SynDevRx Logo">
         </div>
         <div class="lower">
@@ -185,9 +190,8 @@
             </div>
             <div id="tab-scatter">% Change Scatterplots</div>
             <div id="tab-aes">Adverse Events</div>
+            <div id="tab-tba">Tumor Assessments and Time on Trial</div>
             <div id="tab-exposure">Exposure</div>
-            <div id="tab-tba-pct">FU Tumor Burden Assessment (% Change)</div>
-            <div id="tab-tba-abs">FU Tumor Burden Assessment (Abs)</div>
         </div>
     </div>
     <div class="content">
