@@ -101,7 +101,13 @@
             document.getElementById('tab-lab-values-all').addEventListener('click', function() {
                 showContent('LabValues.html', 'tab-lab-values-all');
                 labValuesSelect.style.display = 'none'; // Hide the select if visible
-                console.log('LOC 11');
+                console.log('LOC 11.1');
+            });
+            document.getElementById('tab-biomarker-values').addEventListener('click', function() {
+                // showContent('BiomarkerSelector.html', 'tab-biomarker-values');
+                showContent('BiomarkerValues.html', 'tab-biomarker-values');
+                labValuesSelect.style.display = 'none'; // Hide the select if visible
+                console.log('LOC 11.2');
             });
             document.getElementById('tab-lab-values-single').addEventListener('click', function() {
                 showContent('PleaseSelectPatient.html', 'tab-lab-values-single');
@@ -162,7 +168,8 @@
         </div>
         <div class="lower">
 	    <!-- -the next 2 div used to be marked class='active' . Did that accomplish anything? -->
-            <div id="tab-lab-values-all">Lab Values</div>
+            <div id="tab-lab-values-all">EDC Lab Values</div>
+            <div id="tab-biomarker-values">Biomarkers</div>
             <div hidden id="tab-lab-values-single">Lab Values (Select Patient)</div>
             <div hidden>
             <select class="select-list-style" id="labValuesSelect">
