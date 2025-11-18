@@ -145,6 +145,11 @@
                 labValuesSelect.style.display = 'none';
                 console.log('LOC 15');
             });
+            document.getElementById('tab-tables-listings').addEventListener('click', function() {
+                showContent('tables_listings_toplevel.html', 'tab-tables-listings');
+                labValuesSelect.style.display = 'none';
+                console.log('LOC 15');
+            });
             //document.getElementById('tab-tba-pct').addEventListener('click', function() {
             //    showContent('tba/102m_tba_pct.html', 'tab-tba-pct');
             //    labValuesSelect.style.display = 'none';
@@ -199,6 +204,7 @@
             <div id="tab-aes">Adverse Events</div>
             <div id="tab-tba">Tumor Assessments and Time on Trial</div>
             <div id="tab-exposure">Exposure</div>
+            <div id="tab-tables-listings">Tables and Listings</div>
         </div>
     </div>
     <div class="content">
