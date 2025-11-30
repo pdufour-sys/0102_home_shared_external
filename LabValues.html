@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>22-074/SDX-0102 Aretha-1 EDC Graphs</title>
+    <title>22-074/SDX-0102 EDC Graphs</title>
     <link rel="shortcut icon" href="SynDevRxFavicon.png" type="image/x-icon" />
     <style>
         body {
@@ -14,31 +14,41 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            height: 100vh;
+            min-height: 100vh; /* Use min-height for full-page coverage with scrolling */
             box-sizing: border-box;
-            overflow-y: auto; /* Allow scrolling */
+            overflow-y: auto;
         }
-        .container {
+        .main-container {
             background: white;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 1000px;
-            width: 100%;
+            max-width: 1200px; /* Increased max-width to accommodate two columns */
+            width: 95%;
             text-align: center;
             box-sizing: border-box;
-            margin-top: 20px; /* Add some margin at the top */
+            margin-top: 20px;
         }
         .title {
             font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-size: 18px;
             margin-bottom: 20px;
-            color: #555;
         }
-        .grid-container {
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two main columns */
+            gap: 20px;
+            text-align: left;
+        }
+        .column-header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 5px;
+        }
+        .sub-grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
@@ -70,59 +80,120 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
       <div class="title">
-        <span id="topoftheline">22-074 / SDX-0102 EDC Graphs</span></div>
-        <div class="grid-container">
-            <div class="grid-item"> <a href="Albumin.html">Albumin</a></div>
-            <div class="grid-item"> <a href="Alkaline_Phosphatase.html">Alkaline Phosphatase</a></div>
-            <div class="grid-item"> <a href="ALT.html">ALT</a></div>
-            <div class="grid-item"> <a href="APTT.html">APTT</a></div>
-            <div class="grid-item"> <a href="AST.html">AST</a></div>
-            <div class="grid-item"> <a href="Absolute_Basophils.html">Basophils (Abs)</a></div>
-            <div class="grid-item"> <a href="Basophils_(%).html">Basophils (%)</a></div>
-            <div class="grid-item"> <a href="BMI.html">BMI</a></div>
-            <div class="grid-item"> <a href="BUN.html">BUN</a></div>
-            <div class="grid-item"> <a href="Calcium.html">Calcium</a></div>
-            <div class="grid-item"> <a href="Carbon_dioxide.html">Carbon Dioxide</a></div>
-            <div class="grid-item"> <a href="Chloride.html">Chloride</a></div>
-            <div class="grid-item"> <a href="Creatinine.html">Creatinine</a></div>
-            <div class="grid-item"> <a href="D-Dimer.html">D-Dimer</a></div>
-            <div class="grid-item"> <a href="Absolute_Eosinphils.html">Eosinophils (Abs)</a></div>
-            <div class="grid-item"> <a href="Eosinophils_(%).html">Eosinophils %</a></div>
-            <div class="grid-item"> <a href="Glucose.html">Glucose</a></div>
-            <div class="grid-item"> <a href="Fasting_Glucose.html">Fasting Glucose</a></div>
-            <div class="grid-item"> <a href="HbA1c.html">HbA1c</a></div>
-            <div class="grid-item"> <a href="Hematocrit.html">Hematocrit</a></div>
-            <div class="grid-item"> <a href="Hemoglobin.html">Hemoglobin</a></div>
-            <div class="grid-item"> <a href="HDL.html">HDL</a></div>
-            <div class="grid-item"> <a href="HOMA-IR_(EDC).html">HOMA-IR (from EDC)</a></div>
-            <div class="grid-item"> <a href="HOMA-IR_(Patched).html">HOMA-IR (Patched)</a></div>
-            <div class="grid-item"> <a href="Fasting_Insulin.html">Fasting Insulin</a></div>
-            <div class="grid-item"> <a href="LDL.html">LDL</a></div>
-            <div class="grid-item"> <a href="Absolute_Lymphocytes.html">Lymphocytes (Abs)</a></div>
-            <div class="grid-item"> <a href="Lymphocytes.html">Lymphocytes (%)</a></div>
-            <div class="grid-item"> <a href="MCHC.html">MCHC</a></div>
-            <div class="grid-item"> <a href="MCH.html">MCH</a></div>
-            <div class="grid-item"> <a href="MCV.html">MCV</a></div>
-            <div class="grid-item"> <a href="Absolute_Monocytes.html">Monocytes (Abs)</a></div>
-            <div class="grid-item"> <a href="Monocytes_(%).html">Monocytes (%)</a></div>
-            <div class="grid-item"> <a href="Absolute_Neutrophils.html">Neutrophils (Abs)</a></div>
-            <div class="grid-item"> <a href="Neutrophils.html">Neutrophils (%)</a></div>
-	    <div class="grid-item"> <a href="Platelet_Count.html">Platelet Count</a></div>
-            <div class="grid-item"> <a href="Potassium.html">Potassium</a></div>
-            <div class="grid-item"> <a href="PT.html">PT</a></div>
-            <div class="grid-item"> <a href="PT_inr.html">pt-inr</a></div>
-            <div class="grid-item"> <a href="RBC.html">RBC</a></div>
-            <div class="grid-item"> <a href="RDW.html">RDW</a></div>
-            <div class="grid-item"> <a href="Sodium.html">Sodium</a></div>
-            <div class="grid-item"> <a href="Total_Bilirubin.html">Total Bilirubin</a></div>
-            <div class="grid-item"> <a href="Total_Protein.html">Total Protein</a></div>
-            <div class="grid-item"> <a href="Triglycerides.html">Triglycerides</a></div>
-            <div class="grid-item"> <a href="WBC.html">WBC</a></div>
-            <div class="grid-item"> <a href="Weight.html">Weight</a></div>
+        <span id="topoftheline">22-074 / SDX-0102 EDC Graphs</span>
+      </div>
+
+      <div class="content-grid">
+        <div>
+          <div class="column-header">Absolute Values</div>
+          <div class="sub-grid-container">
+            <div class="grid-item"> <a href="abs\abs_Albumin.html">Albumin</a></div>
+            <div class="grid-item"> <a href="abs\abs_Alkaline_Phosphatase.html">Alkaline Phosphatase</a></div>
+            <div class="grid-item"> <a href="abs\abs_ALT.html">ALT</a></div>
+            <div class="grid-item"> <a href="abs\abs_APTT.html">APTT</a></div>
+            <div class="grid-item"> <a href="abs\abs_AST.html">AST</a></div>
+            <div class="grid-item"> <a href="abs\abs_Absolute_Basophils.html">Basophils (Abs)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Basophils_(%).html">Basophils (%)</a></div>
+            <div class="grid-item"> <a href="abs\abs_BMI.html">BMI</a></div>
+            <div class="grid-item"> <a href="abs\abs_BUN.html">BUN</a></div>
+            <div class="grid-item"> <a href="abs\abs_Calcium.html">Calcium</a></div>
+            <div class="grid-item"> <a href="abs\abs_Carbon_dioxide.html">Carbon Dioxide</a></div>
+            <div class="grid-item"> <a href="abs\abs_Chloride.html">Chloride</a></div>
+            <div class="grid-item"> <a href="abs\abs_Creatinine.html">Creatinine</a></div>
+            <div class="grid-item"> <a href="abs\abs_D-Dimer.html">D-Dimer</a></div>
+            <div class="grid-item"> <a href="abs\abs_Absolute_Eosinphils.html">Eosinophils (Abs)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Eosinophils_(%).html">Eosinophils %</a></div>
+            <div class="grid-item"> <a href="abs\abs_Glucose.html">Glucose</a></div>
+            <div class="grid-item"> <a href="abs\abs_Fasting_Glucose.html">Fasting Glucose</a></div>
+            <div class="grid-item"> <a href="abs\abs_HbA1c.html">HbA1c</a></div>
+            <div class="grid-item"> <a href="abs\abs_Hematocrit.html">Hematocrit</a></div>
+            <div class="grid-item"> <a href="abs\abs_Hemoglobin.html">Hemoglobin</a></div>
+            <div class="grid-item"> <a href="abs\abs_HDL.html">HDL</a></div>
+            <div class="grid-item"> <a href="abs\abs_HOMA-IR_(EDC).html">HOMA-IR (from EDC)</a></div>
+            <div class="grid-item"> <a href="abs\abs_HOMA-IR_(Patched).html">HOMA-IR (Patched)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Fasting_Insulin.html">Fasting Insulin</a></div>
+            <div class="grid-item"> <a href="abs\abs_LDL.html">LDL</a></div>
+            <div class="grid-item"> <a href="abs\abs_Absolute_Lymphocytes.html">Lymphocytes (Abs)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Lymphocytes.html">Lymphocytes (%)</a></div>
+            <div class="grid-item"> <a href="abs\abs_MCHC.html">MCHC</a></div>
+            <div class="grid-item"> <a href="abs\abs_MCH.html">MCH</a></div>
+            <div class="grid-item"> <a href="abs\abs_MCV.html">MCV</a></div>
+            <div class="grid-item"> <a href="abs\abs_Absolute_Monocytes.html">Monocytes (Abs)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Monocytes_(%).html">Monocytes (%)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Absolute_Neutrophils.html">Neutrophils (Abs)</a></div>
+            <div class="grid-item"> <a href="abs\abs_Neutrophils.html">Neutrophils (%)</a></div>
+	    <div class="grid-item"> <a href="abs\abs_Platelet_Count.html">Platelet Count</a></div>
+            <div class="grid-item"> <a href="abs\abs_Potassium.html">Potassium</a></div>
+            <div class="grid-item"> <a href="abs\abs_PT.html">PT</a></div>
+            <div class="grid-item"> <a href="abs\abs_PT_inr.html">pt-inr</a></div>
+            <div class="grid-item"> <a href="abs\abs_RBC.html">RBC</a></div>
+            <div class="grid-item"> <a href="abs\abs_RDW.html">RDW</a></div>
+            <div class="grid-item"> <a href="abs\abs_Sodium.html">Sodium</a></div>
+            <div class="grid-item"> <a href="abs\abs_Total_Bilirubin.html">Total Bilirubin</a></div>
+            <div class="grid-item"> <a href="abs\abs_Total_Protein.html">Total Protein</a></div>
+            <div class="grid-item"> <a href="abs\abs_Triglycerides.html">Triglycerides</a></div>
+            <div class="grid-item"> <a href="abs\abs_WBC.html">WBC</a></div>
+            <div class="grid-item"> <a href="abs\abs_Weight.html">Weight</a></div>
             <!-- Add more grid items as needed -->
+          </div>
         </div>
+
+        <div>
+          <div class="column-header">Percent Changes</div>
+          <div class="sub-grid-container">
+            <div class="grid-item"> <a href="pct\pct_Albumin.html">Albumin</a></div>
+            <div class="grid-item"> <a href="pct\pct_Alkaline_Phosphatase.html">Alkaline Phosphatase</a></div>
+            <div class="grid-item"> <a href="pct\pct_ALT.html">ALT</a></div>
+            <div class="grid-item"> <a href="pct\pct_APTT.html">APTT</a></div>
+            <div class="grid-item"> <a href="pct\pct_AST.html">AST</a></div>
+            <div class="grid-item"> <a href="pct\pct_Absolute_Basophils.html">Basophils (Abs)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Basophils_(%).html">Basophils (%)</a></div>
+            <div class="grid-item"> <a href="pct\pct_BMI.html">BMI</a></div>
+            <div class="grid-item"> <a href="pct\pct_BUN.html">BUN</a></div>
+            <div class="grid-item"> <a href="pct\pct_Calcium.html">Calcium</a></div>
+            <div class="grid-item"> <a href="pct\pct_Carbon_dioxide.html">Carbon Dioxide</a></div>
+            <div class="grid-item"> <a href="pct\pct_Chloride.html">Chloride</a></div>
+            <div class="grid-item"> <a href="pct\pct_Creatinine.html">Creatinine</a></div>
+            <div class="grid-item"> <a href="pct\pct_D-Dimer.html">D-Dimer</a></div>
+            <div class="grid-item"> <a href="pct\pct_Absolute_Eosinphils.html">Eosinophils (Abs)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Eosinophils_(%).html">Eosinophils %</a></div>
+            <div class="grid-item"> <a href="pct\pct_Glucose.html">Glucose</a></div>
+            <div class="grid-item"> <a href="pct\pct_Fasting_Glucose.html">Fasting Glucose</a></div>
+            <div class="grid-item"> <a href="pct\pct_HbA1c.html">HbA1c</a></div>
+            <div class="grid-item"> <a href="pct\pct_Hematocrit.html">Hematocrit</a></div>
+            <div class="grid-item"> <a href="pct\pct_Hemoglobin.html">Hemoglobin</a></div>
+            <div class="grid-item"> <a href="pct\pct_HDL.html">HDL</a></div>
+            <div class="grid-item"> <a href="pct\pct_HOMA-IR_(EDC).html">HOMA-IR (from EDC)</a></div>
+            <div class="grid-item"> <a href="pct\pct_HOMA-IR_(Patched).html">HOMA-IR (Patched)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Fasting_Insulin.html">Fasting Insulin</a></div>
+            <div class="grid-item"> <a href="pct\pct_LDL.html">LDL</a></div>
+            <div class="grid-item"> <a href="pct\pct_Absolute_Lymphocytes.html">Lymphocytes (Abs)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Lymphocytes.html">Lymphocytes (%)</a></div>
+            <div class="grid-item"> <a href="pct\pct_MCHC.html">MCHC</a></div>
+            <div class="grid-item"> <a href="pct\pct_MCH.html">MCH</a></div>
+            <div class="grid-item"> <a href="pct\pct_MCV.html">MCV</a></div>
+            <div class="grid-item"> <a href="pct\pct_Absolute_Monocytes.html">Monocytes (Abs)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Monocytes_(%).html">Monocytes (%)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Absolute_Neutrophils.html">Neutrophils (Abs)</a></div>
+            <div class="grid-item"> <a href="pct\pct_Neutrophils.html">Neutrophils (%)</a></div>
+	    <div class="grid-item"> <a href="pct\pct_Platelet_Count.html">Platelet Count</a></div>
+            <div class="grid-item"> <a href="pct\pct_Potassium.html">Potassium</a></div>
+            <div class="grid-item"> <a href="pct\pct_PT.html">PT</a></div>
+            <div class="grid-item"> <a href="pct\pct_PT_inr.html">pt-inr</a></div>
+            <div class="grid-item"> <a href="pct\pct_RBC.html">RBC</a></div>
+            <div class="grid-item"> <a href="pct\pct_RDW.html">RDW</a></div>
+            <div class="grid-item"> <a href="pct\pct_Sodium.html">Sodium</a></div>
+            <div class="grid-item"> <a href="pct\pct_Total_Bilirubin.html">Total Bilirubin</a></div>
+            <div class="grid-item"> <a href="pct\pct_Total_Protein.html">Total Protein</a></div>
+            <div class="grid-item"> <a href="pct\pct_Triglycerides.html">Triglycerides</a></div>
+            <div class="grid-item"> <a href="pct\pct_WBC.html">WBC</a></div>
+            <div class="grid-item"> <a href="pct\pct_Weight.html">Weight</a></div>
+            <!-- Add more grid items as needed -->
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 </html>
